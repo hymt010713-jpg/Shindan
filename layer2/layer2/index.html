@@ -99,17 +99,30 @@
   .l0box textarea{min-height:70px;font-family:ui-monospace,Menlo,monospace;font-size:12px;line-height:1.6}
   .l0msg{font-size:13px;margin-top:10px;letter-spacing:.04em}
   .l0msg.ok{color:var(--accent)} .l0msg.ng{color:#b5573f}
+  /* 7つの見え方 ── 両端の呼び名を同じ行に置く。
+     呼び名を別行や凡例に追い出すと、視線が往復して読む速度が落ちる。
+     第2層の情報の中心は数字ではなく「どちら側の呼び名に寄っているか」なので、
+     呼び名がその場に見えていることが最優先。 */
   .map{margin:6px 0 0}
-  .maprow{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:12.5px;color:var(--sub)}
-  .maprow .nm{flex:0 0 108px;text-align:right;color:var(--ink);font-size:12.5px;line-height:1.5}
-  .maprow .tr{flex:1;height:16px;background:linear-gradient(90deg,#eee9e0,#f4f1ea,#eee9e0);
-    border-radius:2px;position:relative}
-  .maprow .tr u{position:absolute;left:50%;top:0;bottom:0;width:1px;background:#d6cfc4}
-  .maprow .tr i{position:absolute;top:3px;height:10px;border-radius:2px;background:var(--accent);min-width:3px}
-  .maplegend{display:flex;justify-content:space-between;font-size:11.5px;color:var(--sub);
-    margin:2px 0 14px;padding-left:118px}
-  .blkhead{font-size:12px;letter-spacing:.14em;color:var(--sub);margin:20px 0 10px;padding-left:118px}
-  .blkhead:first-child{margin-top:0}
+  .sortbar{display:flex;gap:8px;margin:0 0 22px}
+  .sortbar button{border:1px solid var(--line);background:transparent;border-radius:3px;
+    padding:6px 15px;font-size:12.5px;color:var(--sub);letter-spacing:.06em;transition:all .18s}
+  .sortbar button:hover{border-color:var(--accent);color:var(--ink)}
+  .sortbar button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .sl{display:grid;grid-template-columns:124px 1fr;gap:4px 12px;align-items:center;margin-bottom:15px}
+  .sl .nm{font-size:13px;line-height:1.5;text-align:right;color:var(--ink)}
+  .sl .nm .bn{display:block;font-size:11px;color:var(--sub);letter-spacing:.06em;margin-top:2px}
+  .sl .bd{display:grid;grid-template-columns:96px 1fr 96px;gap:10px;align-items:center}
+  .sl .lb{font-size:11.5px;color:var(--sub);line-height:1.45}
+  .sl .lb.r{text-align:right}
+  .sl .tr{position:relative;height:18px}
+  .sl .tk{position:absolute;top:7px;left:0;right:0;height:4px;border-radius:2px;background:var(--line)}
+  .sl .mid{position:absolute;top:1px;left:50%;width:1px;height:16px;background:#bdb6ab}
+  .sl .dot{position:absolute;top:2px;width:14px;height:14px;border-radius:50%;margin-left:-7px}
+  .sl .cat{font-size:14px;color:var(--ink);line-height:1.6}
+  .sl .cat em{font-style:normal;font-size:11.5px;color:var(--sub);margin-left:10px}
+  .blkhead{font-size:12px;letter-spacing:.14em;color:var(--sub);margin:24px 0 12px;padding-left:136px}
+  .blkhead:first-of-type{margin-top:0}
   @media print{
     @page{ margin:14mm }
     body{background:#fff;color:#000}
@@ -134,8 +147,12 @@
     .qtext{font-size:17px}
     .prose{font-size:15.5px;line-height:2}
     .hit{flex-direction:column;gap:8px}
-    .maprow .nm{flex:0 0 84px;font-size:11.5px}
-    .maplegend,.blkhead{padding-left:94px}
+    .sl{grid-template-columns:1fr;gap:3px}
+    .sl .nm{text-align:left}
+    .sl .nm .bn{display:inline;margin-left:8px}
+    .sl .bd{grid-template-columns:76px 1fr 76px;gap:8px}
+    .sl .lb{font-size:11px}
+    .blkhead{padding-left:0}
   }
 </style>
 </head>
@@ -209,7 +226,8 @@
   <div class="card">
     <h2>7つの見え方</h2>
     <div class="map" id="map"></div>
-    <p class="note">中央の線が真ん中。左右どちらに寄っているかだけを見てください。長さは寄り方の強さです。</p>
+    <p class="note">まん中の線が中央です。点が左右どちらに寄っているかだけを見てください。両端のことばが、その寄り方の意味です。<br>
+    <b>際立ち順</b>にすると、中央から遠いものから順に並びます。上から読むだけで、あなたの輪郭が出ます。</p>
   </div>
 
   <div class="card" id="predcard">
@@ -981,32 +999,58 @@ function buildHits(){
   });
 }
 
-/* ── 6つの見え方の図。文章の補強にとどめる（§5） ── */
+/* ── 7つの見え方。文章の補強にとどめる（§5） ──
+   並べ替えを2通り持つ。
+     ブロック順 … 構造を説明するときの順序
+     際立ち順   … 本人が自分の輪郭を掴むときの順序。上から読むだけでよい
+   「一枚で全体を見たい」には、図を足すのではなく並べ替えで応える。 */
+let mapSort='blk';
+
+/* 際立ちの強さ。連続量は中央からの距離、分類は3問の揃い方 */
+function ord(k){ return SUB[k].cat ? (S.c[k].n-1)/2*100 : dist(k)*2; }
+
+function mapRow(k){
+  const s=SUB[k], c=BLK[s.blk].c;
+  const d=document.createElement('div'); d.className='sl';
+  const nm='<div class="nm">'+s.n+
+    (mapSort==='so' ? '<span class="bn">'+BLK[s.blk].n+'</span>' : '')+'</div>';
+  if(s.cat){
+    const cc=S.c[k], tie=cc.n<2;   /* 3問が全部ばらけた＝首位が並んだ */
+    d.innerHTML=nm+'<div class="cat">'+
+      (tie ? 'どちらとも言えませんでした' : CATNAME[cc.pick])+
+      '<em>'+(tie ? '3問が3つに割れました' : '3問中'+cc.n+'問')+'</em></div>';
+  }else{
+    const v=S.v[k];
+    d.innerHTML=nm+'<div class="bd">'+
+      '<div class="lb r">'+s.lo+'</div>'+
+      '<div class="tr"><span class="tk"></span><span class="mid"></span>'+
+      '<span class="dot" style="left:'+v+'%;background:'+c+'"></span></div>'+
+      '<div class="lb">'+s.hi+'</div></div>';
+  }
+  return d;
+}
+
 function buildMap(){
   const box=document.getElementById('map'); box.innerHTML='';
-  Object.keys(BLK).forEach(b=>{
-    const h=document.createElement('div'); h.className='blkhead';
-    h.textContent=BLK[b].n; h.style.color=BLK[b].c; box.appendChild(h);
-    Object.keys(SUB).filter(k=>SUB[k].blk===b).forEach(k=>{
-      const s=SUB[k];
-      const r=document.createElement('div'); r.className='maprow';
-      if(s.cat){
-        r.innerHTML='<div class="nm">'+s.n+'</div><div style="flex:1;color:var(--ink)">'+
-          CATNAME[S.c[k].pick]+'　<span style="color:var(--sub);font-size:11.5px">'+
-          S.c[k].n+'／3問</span></div>';
-      }else{
-        const v=S.v[k], w=Math.abs(v-50), left=v>=50?50:v;
-        r.innerHTML='<div class="nm">'+s.n+'</div>'+
-          '<div class="tr"><u></u><i style="left:'+left+'%;width:'+w+'%;background:'+BLK[b].c+'"></i></div>';
-      }
-      box.appendChild(r);
-      if(!s.cat){
-        const l=document.createElement('div'); l.className='maplegend';
-        l.innerHTML='<span>'+s.lo+'</span><span>'+s.hi+'</span>';
-        box.appendChild(l);
-      }
-    });
+  const bar=document.createElement('div'); bar.className='sortbar';
+  [['ブロック順','blk'],['際立ち順','so']].forEach(([lab,v])=>{
+    const b=document.createElement('button'); b.textContent=lab;
+    if(mapSort===v) b.classList.add('on');
+    b.onclick=()=>{ mapSort=v; buildMap(); };
+    bar.appendChild(b);
   });
+  box.appendChild(bar);
+
+  if(mapSort==='blk'){
+    Object.keys(BLK).forEach(b=>{
+      const h=document.createElement('div'); h.className='blkhead';
+      h.textContent=BLK[b].n; h.style.color=BLK[b].c; box.appendChild(h);
+      Object.keys(SUB).filter(k=>SUB[k].blk===b).forEach(k=>box.appendChild(mapRow(k)));
+    });
+  }else{
+    Object.keys(SUB).slice().sort((a,b)=>ord(b)-ord(a))
+      .forEach(k=>box.appendChild(mapRow(k)));
+  }
 }
 
 /* ── くわしく見る ── */
