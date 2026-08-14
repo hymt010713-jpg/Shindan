@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>感覚診断</title>
+<title>感覚診断 — あなたは、自分の感覚を理解していますか</title>
 <style>
   :root{
     --bg:#f7f5f1; --ink:#22201d; --sub:#6b655d; --line:#ddd7cd;
@@ -12,71 +12,119 @@
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);
     font-family:"Hiragino Mincho ProN","Yu Mincho",serif;line-height:1.9;-webkit-font-smoothing:antialiased;}
-  .wrap{max-width:720px;margin:0 auto;padding:64px 24px 96px}
-  h1{font-size:28px;font-weight:600;letter-spacing:.08em;margin:0 0 8px}
-  .lead{color:var(--sub);font-size:14px;letter-spacing:.04em;margin:0 0 20px}
-  .intro{font-size:16px;line-height:2.1;margin:0 0 40px}
-  .intro p{margin:0 0 18px}
-  .intro p:last-child{margin:0}
+  .wrap{max-width:680px;margin:0 auto;padding:96px 24px 96px}
 
-  a.card{
-    display:block;text-decoration:none;color:inherit;
-    background:var(--card);border:1px solid var(--line);border-radius:4px;
-    padding:28px 26px;margin-bottom:18px;transition:border-color .2s, background .2s;
-  }
-  a.card:hover{border-color:var(--accent);background:#fbfaf6}
-  .lbl{font-size:11.5px;letter-spacing:.18em;color:var(--accent);display:block;margin-bottom:8px}
-  .ttl{font-size:21px;letter-spacing:.05em;margin:0 0 10px}
-  .txt{font-size:14.5px;line-height:1.95;color:var(--sub);margin:0}
-  .spec{font-size:12.5px;letter-spacing:.06em;color:var(--sub);margin-top:14px;
-        border-top:1px solid var(--line);padding-top:12px}
-  .go{font-size:13px;letter-spacing:.1em;color:var(--accent);margin-top:12px;display:block}
+  .q{font-size:29px;font-weight:600;letter-spacing:.06em;line-height:1.75;margin:0 0 10px}
+  .q small{display:block;font-size:15px;font-weight:400;color:var(--sub);letter-spacing:.04em;margin-top:18px;line-height:1.9}
 
-  .order{border-left:2px solid var(--line);padding:4px 0 4px 16px;margin:34px 0 0;
-         font-size:13.5px;line-height:1.95;color:var(--sub)}
-  .foot{font-size:12.5px;color:var(--sub);line-height:1.9;margin-top:40px;
-        border-top:1px solid var(--line);padding-top:20px}
+  .rule{height:1px;background:var(--line);margin:56px 0}
+
+  p.b{font-size:16.5px;line-height:2.15;margin:0 0 22px}
+  p.b:last-child{margin-bottom:0}
+  .lead2{font-size:13px;letter-spacing:.16em;color:var(--accent);margin:0 0 20px}
+
+  .pair{border-top:1px solid var(--line);padding:20px 0 4px}
+  .pair:last-of-type{border-bottom:1px solid var(--line);margin-bottom:34px}
+  .scene{font-size:13px;letter-spacing:.06em;color:var(--sub);margin:0 0 12px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .two div{font-size:15.5px;line-height:1.8;background:var(--card);
+    border:1px solid var(--line);border-radius:4px;padding:14px 16px}
+
+  .point{border-left:2px solid var(--accent);padding:6px 0 6px 18px;margin:34px 0;
+    font-size:17px;line-height:2.05}
+
+  .three{margin:26px 0 0}
+  .three div{border-top:1px solid var(--line);padding:18px 0;font-size:15.5px;line-height:1.9}
+  .three div:last-child{border-bottom:1px solid var(--line)}
+  .three b{display:block;font-size:15px;letter-spacing:.04em;margin-bottom:4px}
+
+  .cta{display:block;text-align:center;text-decoration:none;background:var(--ink);color:var(--bg);
+    border-radius:3px;padding:19px 24px;font-size:16px;letter-spacing:.14em;margin:56px 0 0;
+    transition:opacity .2s}
+  .cta:hover{opacity:.82}
+  .ctanote{text-align:center;font-size:12.5px;color:var(--sub);letter-spacing:.06em;margin:14px 0 0;line-height:1.9}
+
+  .foot{font-size:12.5px;color:var(--sub);line-height:1.9;margin-top:56px;
+    border-top:1px solid var(--line);padding-top:22px}
+
   @media(max-width:600px){
-    .wrap{padding:44px 16px 80px}
-    a.card{padding:22px 18px}
-    h1{font-size:24px} .ttl{font-size:19px} .intro{font-size:15.5px;line-height:2}
+    .wrap{padding:56px 18px 72px}
+    .q{font-size:23px;line-height:1.7}
+    p.b{font-size:15.5px;line-height:2.05}
+    .two{grid-template-columns:1fr;gap:8px}
+    .point{font-size:15.5px}
   }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <h1>感覚診断</h1>
-  <p class="lead">性格ではなく、その手前にある感覚を測る</p>
+  <h1 class="q">あなたは、自分の感覚を<br>理解していますか。
+    <small>そしてその元にある、自分の心の性質を。</small></h1>
 
-  <div class="intro">
-    <p>性格診断は「傾向」を測ります。この診断が測るのは<b>感覚</b>、つまり行動が生まれる手前の、世界がどう感じられているかの構造です。</p>
-    <p>「外交的か内向的か」は結果です。その手前に、人と会うことが充電か消耗かという感じられ方があり、さらにその手前に、他者が心に入ってくる度合いを決めている心の形があります。この診断は、いちばん下まで降ります。</p>
-    <p>横のちがい（どんな形か）に、良い悪いはありません。</p>
+  <div class="rule"></div>
+
+  <p class="b">あなたは、自分の感じ方を他人と<b>比べたことがありません。</b></p>
+  <p class="b">当たり前です。人の頭の中は見えないので、比べようがない。だから私たちは、自分の感じ方を「ふつう」だと思って生きています。</p>
+  <p class="b">でも、ふつうは人によって違います。</p>
+
+  <p class="lead2">同じ場面で、こう分かれます</p>
+
+  <div class="pair">
+    <p class="scene">予定が何もない休日の朝</p>
+    <div class="two">
+      <div>この時間がずっと続いてほしい</div>
+      <div>何かしなければ、と落ち着かない</div>
+    </div>
   </div>
 
-  <a class="card" href="layer0/">
-    <span class="lbl">第 0 層</span>
-    <p class="ttl">心の形</p>
-    <p class="txt">用事も予定もない時間に、心が自然に落ち着く場所。本人にとっては「普通」なので、比べる相手がいないかぎり最も自覚しにくい層です。ふだんの心、揺れたあと元に戻る力、考えが向かう先、場面が変わったときの自分、満足が生まれる場所の5つを測ります。</p>
-    <p class="spec">24項目・約8分　／　20の型と、あなた向けの文章が出ます</p>
-    <span class="go">はじめる →</span>
-  </a>
+  <div class="pair">
+    <p class="scene">来月のカレンダーが真っ白</p>
+    <div class="two">
+      <div>空いていて、うれしい</div>
+      <div>埋まっていないのが、気になる</div>
+    </div>
+  </div>
 
-  <a class="card" href="layer2/">
-    <span class="lbl">第 2 層</span>
-    <p class="ttl">世界の見え方</p>
-    <p class="txt">その形をとおして、世界がどう見えているか。時間、まだ分からないこと、他人との境目、意味、変化、知ること。この6つの見え方は人によってまったく違いますが、ふだん比べる機会がないので「そういうもの」として通り過ぎています。</p>
-    <p class="spec">51項目・約12分　／　第0層の結果があると、そこからの予測と答え合わせができます</p>
-    <span class="go">はじめる →</span>
-  </a>
+  <div class="pair">
+    <p class="scene">大きな選択を前にして</p>
+    <div class="two">
+      <div>だめならやり直せばいい</div>
+      <div>一度決めたら、もう戻れない</div>
+    </div>
+  </div>
 
-  <p class="order"><b>順番について</b><br>
-    どちらからでも受けられます。ただし第0層を先に受けて、結果のデータを控えておくと、第2層で「第0層から予測した世界の見え方」と実際の答えを突き合わせられます。この答え合わせが、この診断の中心にある部分です。</p>
+  <p class="b">どちらの人も、自分の側を「ふつう」だと思っています。相手が違うふうに感じていることを、想像もしません。</p>
+
+  <p class="point">この違いは、性格ではありません。<br>
+    <b>行動が生まれる手前にある、世界の感じられ方そのもの</b>です。</p>
+
+  <p class="b">性格診断が測るのは「あなたが何をする人か」です。外交的か、慎重か、計画的か。でもそれは<b>結果のほう</b>です。</p>
+  <p class="b">人と会うのが好きかどうかの手前に、人と会うことが充電になるか消耗になるかがあります。リスクを取れる人は、勇気があるのではありません。<b>失敗しても元に戻れると、経験から知っているだけ</b>です。</p>
+  <p class="b">この診断は、そこまで降ります。</p>
+
+  <div class="rule"></div>
+
+  <p class="lead2">分かること</p>
+
+  <div class="three">
+    <div><b>自分が消耗する理由と、回復のしかた</b>
+      なぜ同じ環境で自分だけ疲れるのか。何をすれば戻るのか。</div>
+    <div><b>人と噛み合わないときの、本当の理由</b>
+      相手が鈍いのでも冷たいのでもなく、見えているものが違う。</div>
+    <div><b>「なぜ自分はこうなのか」への答え</b>
+      性格の問題として片づいていたことに、構造から説明がつきます。</div>
+  </div>
+
+  <p class="b" style="margin-top:34px"><b>良い形・悪い形はありません。</b>どこに落ち着くかは、優れている・劣っているの話ではなく、向きの違いです。</p>
+  <p class="b"><b>占いでもありません。</b>先に予想を立てて、当たったか外れたかを毎回記録しています。外れたら、こちらの考えのほうを直します。</p>
+
+  <a class="cta" href="menu/">はじめる</a>
+  <p class="ctanote">2つの診断があります。まず1つめだけでも構いません。<br>結果はこの端末の中だけで計算されます。</p>
 
   <p class="foot">
-    結果はこの端末の中だけで計算されます。送信ボタンを押さないかぎり、どこにも送られません。<br>
-    まだ調整中の診断です。当たらなかったところは、結果画面から教えてもらえると助かります。
+    まだ調整中の診断です。当たらなかったところは、結果画面から教えてもらえると助かります。<br>
+    送信ボタンを押さないかぎり、回答はどこにも送られません。
   </p>
 
 </div>
