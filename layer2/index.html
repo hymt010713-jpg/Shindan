@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>感覚診断 第2層 ― 世界の見え方</title>
+<title>感覚診断 2層 ― 世界の見えかた</title>
 <style>
   :root{
     --bg:#f7f5f1; --ink:#22201d; --sub:#6b655d; --line:#ddd7cd;
     --card:#fffdfa; --accent:#3f6d5f;
     --b1:#5b8c7b; --b2:#c9922f; --b3:#b5573f; --b4:#5c6b80; --b5:#7a6a8c; --b6:#4f7d8c;
+    --b7:#8a6f52;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);
@@ -92,23 +93,49 @@
   .attr label{font-size:13.5px;color:var(--sub);display:flex;flex-direction:column;gap:6px}
   .attr select,.attr input{font-family:inherit;font-size:14.5px;padding:8px 10px;
     border:1px solid var(--line);border-radius:3px;background:var(--card);color:var(--ink);min-width:150px}
+  .consent{border:1px solid var(--line);border-radius:4px;padding:16px 18px;margin:0 0 18px;background:#fbfaf6}
+  .consent label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:14.5px;line-height:1.7}
+  .consent input{margin-top:6px;width:17px;height:17px;accent-color:var(--accent);flex:0 0 auto}
+  .consent ul{margin:12px 0 0;padding-left:1.2em;font-size:12.5px;color:var(--sub);line-height:1.85}
+  .consent li{margin-bottom:6px}
+  .btn[disabled]{opacity:.35;pointer-events:none}
+  .creed{font-size:12.5px;color:var(--sub);letter-spacing:.04em;line-height:1.8;
+    margin:20px 0 0;padding-top:14px;border-top:1px solid var(--line)}
+  .recall{border:1px solid var(--line);border-radius:4px;background:#fbfaf6;padding:14px 16px;margin:22px 0 0}
+  .recall p.h{font-size:12px;letter-spacing:.1em;color:var(--sub);margin:0 0 8px}
+  .recall div{font-size:12.5px;line-height:1.65;color:var(--sub);padding:6px 0;border-top:1px solid var(--line)}
+  .recall div:first-of-type{border-top:none}
+  .recall b{color:var(--ink);font-weight:600}
   .hidden{display:none}
   .printonly{display:none}
   .l0box{margin-top:20px;border-top:1px solid var(--line);padding-top:20px}
   .l0box textarea{min-height:70px;font-family:ui-monospace,Menlo,monospace;font-size:12px;line-height:1.6}
   .l0msg{font-size:13px;margin-top:10px;letter-spacing:.04em}
   .l0msg.ok{color:var(--accent)} .l0msg.ng{color:#b5573f}
+  /* 7つの見え方 ── 両端の呼び名を同じ行に置く。
+     呼び名を別行や凡例に追い出すと、視線が往復して読む速度が落ちる。
+     第2層の情報の中心は数字ではなく「どちら側の呼び名に寄っているか」なので、
+     呼び名がその場に見えていることが最優先。 */
   .map{margin:6px 0 0}
-  .maprow{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:12.5px;color:var(--sub)}
-  .maprow .nm{flex:0 0 108px;text-align:right;color:var(--ink);font-size:12.5px;line-height:1.5}
-  .maprow .tr{flex:1;height:16px;background:linear-gradient(90deg,#eee9e0,#f4f1ea,#eee9e0);
-    border-radius:2px;position:relative}
-  .maprow .tr u{position:absolute;left:50%;top:0;bottom:0;width:1px;background:#d6cfc4}
-  .maprow .tr i{position:absolute;top:3px;height:10px;border-radius:2px;background:var(--accent);min-width:3px}
-  .maplegend{display:flex;justify-content:space-between;font-size:11.5px;color:var(--sub);
-    margin:2px 0 14px;padding-left:118px}
-  .blkhead{font-size:12px;letter-spacing:.14em;color:var(--sub);margin:20px 0 10px;padding-left:118px}
-  .blkhead:first-child{margin-top:0}
+  .sortbar{display:flex;gap:8px;margin:0 0 22px}
+  .sortbar button{border:1px solid var(--line);background:transparent;border-radius:3px;
+    padding:6px 15px;font-size:12.5px;color:var(--sub);letter-spacing:.06em;transition:all .18s}
+  .sortbar button:hover{border-color:var(--accent);color:var(--ink)}
+  .sortbar button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .sl{display:grid;grid-template-columns:124px 1fr;gap:4px 12px;align-items:center;margin-bottom:15px}
+  .sl .nm{font-size:13px;line-height:1.5;text-align:right;color:var(--ink)}
+  .sl .nm .bn{display:block;font-size:11px;color:var(--sub);letter-spacing:.06em;margin-top:2px}
+  .sl .bd{display:grid;grid-template-columns:96px 1fr 96px;gap:10px;align-items:center}
+  .sl .lb{font-size:11.5px;color:var(--sub);line-height:1.45}
+  .sl .lb.r{text-align:right}
+  .sl .tr{position:relative;height:18px}
+  .sl .tk{position:absolute;top:7px;left:0;right:0;height:4px;border-radius:2px;background:var(--line)}
+  .sl .mid{position:absolute;top:1px;left:50%;width:1px;height:16px;background:#bdb6ab}
+  .sl .dot{position:absolute;top:2px;width:14px;height:14px;border-radius:50%;margin-left:-7px}
+  .sl .cat{font-size:14px;color:var(--ink);line-height:1.6}
+  .sl .cat em{font-style:normal;font-size:11.5px;color:var(--sub);margin-left:10px}
+  .blkhead{font-size:12px;letter-spacing:.14em;color:var(--sub);margin:24px 0 12px;padding-left:136px}
+  .blkhead:first-of-type{margin-top:0}
   @media print{
     @page{ margin:14mm }
     body{background:#fff;color:#000}
@@ -133,8 +160,12 @@
     .qtext{font-size:17px}
     .prose{font-size:15.5px;line-height:2}
     .hit{flex-direction:column;gap:8px}
-    .maprow .nm{flex:0 0 84px;font-size:11.5px}
-    .maplegend,.blkhead{padding-left:94px}
+    .sl{grid-template-columns:1fr;gap:3px}
+    .sl .nm{text-align:left}
+    .sl .nm .bn{display:inline;margin-left:8px}
+    .sl .bd{grid-template-columns:76px 1fr 76px;gap:8px}
+    .sl .lb{font-size:11px}
+    .blkhead{padding-left:0}
   }
 </style>
 </head>
@@ -144,26 +175,29 @@
 <!-- ══════════ 導入 ══════════ -->
 <div id="intro">
   <h1>世界の見え方</h1>
-  <p class="lead">感覚診断 第2層 ／ 45問＋6項目・約12分</p>
+  <p class="lead">感覚診断 2層 ／ 54問＋7項目・約14分</p>
 
   <div class="card">
-    <p class="desc">第0層で測ったのは、あなたの心が自然に落ち着く場所そのものでした。ここで測るのは、その形をとおして<b>世界がどう見えているか</b>です。</p>
-    <p class="desc" style="margin-top:16px">時間、まだ分からないこと、他人との境目、意味、変化、知ること。この6つの見え方は人によってまったく違いますが、ふだんそれを比べる機会がないので、自分の見え方は「そういうもの」として通り過ぎています。</p>
+    <p class="desc">自分が落ち着く心の場所、大元の感覚や物事の感じ方については、<b>0＋1層</b>でチェックしました。ここでは、<b>その心から世界がどう見えているか</b>を見ていきます。</p>
+    <p class="desc" style="margin-top:16px">時間の感じ方、まだ分からないことへの感じ方、他人との境目の感じ方、決まりごとへの考え方、やりがいの感じ方、変わることへのとらえ方、知ることへの向き合い方。<b>この7つです。</b></p>
+    <p class="desc" style="margin-top:16px">どれも人によってまったく違うのですが、ふだん人と比べる機会がないので、自分の感じ方は「そういうもの」として通り過ぎています。</p>
     <ul class="rules">
       <li>正解はありません。良い見え方・悪い見え方もありません</li>
       <li>考えこまず、最初に浮かんだほうを選んでください</li>
       <li>「こうありたい」ではなく「実際どうか」で答えてください</li>
       <li>途中で戻れます。最後まで進むと結果が出ます</li>
+      <li>これは<b>医学的な診断ではありません</b>。心の傾向を見るものです</li>
     </ul>
 
     <div class="l0box">
-      <p class="desc" style="font-size:14.5px;margin-bottom:10px"><b>第0層の結果をお持ちの方へ（任意）</b></p>
-      <p class="note" style="margin-top:0">第0層の結果画面でコピーしたデータを貼ると、<b>第0層からの予測</b>と、この診断の実測を突き合わせます。持っていなくても診断は受けられます。<span id="l0link"></span></p>
+      <p class="desc" style="font-size:14.5px;margin-bottom:10px"><b>0＋1層をすでに受けた方へ（任意）</b></p>
+      <p class="note" style="margin-top:0">0＋1層の結果画面でコピーしたデータを貼ると、<b>0＋1層から予想した答え</b>と、ここで実際に出た答えを突き合わせます。受けていなくても、この診断は受けられます。<span id="l0link"></span></p>
       <textarea id="l0input" placeholder='{"v":"L0-v2.3", ... } をそのまま貼り付け'></textarea>
-      <div style="margin-top:10px"><button class="btn ghost" onclick="loadL0()">読み込む</button></div>
+      <div style="margin-top:10px" id="l0btn"><button class="btn ghost" onclick="loadL0()">読み込む</button></div>
       <div class="l0msg" id="l0msg"></div>
     </div>
 
+  <div class="card hidden" id="resumebox"></div>
     <div style="margin-top:28px"><button class="btn" onclick="start()">はじめる</button></div>
   </div>
 </div>
@@ -176,6 +210,7 @@
   <div class="card">
     <p class="qtext" id="qtext"></p>
     <div id="answers"></div>
+    <p class="creed" id="creed"></p>
     <div class="navrow">
       <button class="back" id="backbtn" onclick="back()">← ひとつ戻る</button>
       <span class="hint" id="hint"></span>
@@ -186,16 +221,17 @@
 <!-- ══════════ 結果 ══════════ -->
 <div id="result" class="hidden">
   <h1>世界の見え方</h1>
-  <p class="lead" id="resultlead">感覚診断 第2層 ／ 結果</p>
+  <p class="lead" id="resultlead">感覚診断 2層 ／ 結果</p>
 
   <div class="card">
     <h2>いちばん際立っているところ</h2>
     <p class="big" id="standout" style="line-height:1.6"></p>
     <p class="desc" id="standoutd" style="margin-top:10px"></p>
+<p class="note" style="margin-top:14px">これは<b>医学的な診断ではありません。</b>心の傾向を見るもので、病気の有無や状態を判定するものではありません。つらさが続いている場合は、専門の窓口にご相談ください。</p>
   </div>
 
   <div class="card">
-    <h2>あなたに世界はこう見えている</h2>
+    <h2>あなたには、世界がこう見えています</h2>
     <div class="prose" id="prose"></div>
   </div>
 
@@ -206,13 +242,14 @@
   </div>
 
   <div class="card">
-    <h2>6つの見え方</h2>
+    <h2>7つの感じ方</h2>
     <div class="map" id="map"></div>
-    <p class="note">中央の線が真ん中。左右どちらに寄っているかだけを見てください。長さは寄り方の強さです。</p>
+    <p class="note">まん中の線が中央です。点が左右どちらに寄っているかだけを見てください。両端のことばが、その寄り方の意味です。<br>
+    <b>際立ち順</b>にすると、中央から遠いものから順に並びます。上から読むだけで、あなたの輪郭が出ます。</p>
   </div>
 
   <div class="card" id="predcard">
-    <h2>第0層からの予測と、その答え合わせ</h2>
+    <h2>0＋1層からの予想と、その答え合わせ</h2>
     <p class="note" style="margin-top:0;margin-bottom:14px" id="predlead"></p>
     <div id="preds"></div>
     <p class="desc" id="predsum" style="margin-top:16px"></p>
@@ -236,7 +273,7 @@
       <label>性別（任意）
         <select id="attrSex"><option value=""></option><option>女性</option><option>男性</option>
         <option>その他</option><option>答えない</option></select></label>
-      <label>お名前・ID（任意）<input id="attrName" maxlength="40" placeholder="第0層と同じものを"></label>
+      <label>お名前・ID（任意）<input id="attrName" maxlength="40" placeholder="第0＋1層と同じものを"></label>
     </div>
   </div>
 
@@ -250,6 +287,35 @@
       <button class="btn ghost" onclick="downloadJSON()">ファイルで保存</button>
     </div>
     <div class="note" id="copymsg"></div>
+
+    <div id="sendbox" class="hidden" style="margin-top:26px;padding-top:22px;border-top:1px solid var(--line)">
+      <p class="desc" style="margin:0 0 14px">ボタンひとつで送ることもできます。</p>
+    <div class="consent">
+      <label><input type="checkbox" id="agree" onchange="updSend()">
+        <span>下の内容を読んで、結果を送ることに同意します</span></label>
+      <ul>
+        <li>送られるのは上の枠に出ている内容だけです。氏名・連絡先・メールアドレス・端末の情報は含まれません</li>
+        <li>この診断には、<b>やりがいの感じ方や決まりごとへの考え方など、信条に関わる項目が含まれます</b>（法律上「要配慮個人情報」にあたる場合があります）</li>
+        <li>使いみちは、<b>この診断の精度の検証と改良</b>、および統計としての集計です</li>
+        <li><b>採用選考には使いません。</b>個人が特定できる形で第三者に渡すこともありません</li>
+        <li>送らなくても結果は変わりません。あとから取り消したいときはご連絡ください</li>
+      </ul>
+    </div>
+      <button class="btn" onclick="sendResult()" id="sendbtn" disabled>結果を送る</button>
+      <p class="note" id="sendmsg" style="margin-top:10px"></p>
+      <p class="note">送られるのは上の枠に出ている内容だけです。氏名や連絡先、メールアドレス、端末の情報は含まれません。送らなくても結果は変わりません。</p>
+    </div>
+    <iframe name="gs_sink" style="display:none" title="送信用"></iframe>
+  </div>
+
+  <div class="card" id="navcard">
+    <h2>行き来する</h2>
+    <p class="desc" style="margin:0 0 16px" id="navtext"></p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn ghost" href="../menu/" style="text-decoration:none;display:inline-block">選び直す</a>
+      <a class="btn ghost" id="navl0" href="../layer0/" style="text-decoration:none;display:inline-block">第0＋1層へ</a>
+      <button class="btn ghost" onclick="location.reload()">2層をもう一度</button>
+    </div>
   </div>
 
   <div class="printonly"><div id="exportprint"></div></div>
@@ -262,12 +328,12 @@
    仕様書 v1.0 §3 に対応。§3.7 の重複整理を適用済み。
 
    19下位次元 → 15下位次元
-     削除  侵食後の回復 … 第0層の戻る力・第1層の回復速度と三重
-     削除  自己の可変性 … 第0層の戻る力と重複
+     削除  侵食後の回復 … 第0＋1層の戻る力・第1層の回復速度と三重
+     削除  自己の可変性 … 第0＋1層の戻る力と重複
      削除  未知への耐性 … 不確実性の「未知の顔」に寄せた
      統合  意味の単位   … 物語性に吸収（どちらも意味が成立する時間の長さの話）
-     残す  時間の重心   … 検証用（第0層「考えが向かう先」と別の聞き方で測る）
-     残す  未知の顔     … 検証用（第0層の基底＋戻る力からの予測を確かめる）
+     残す  時間の重心   … 検証用（第0＋1層「考えが向かう先」と別の聞き方で測る）
+     残す  未知の顔     … 検証用（第0＋1層の基底＋戻る力からの予測を確かめる）
 
    設問設計（仕様書 §5・§6）
      ・4段階（中央なし）。5段階にすると63%が中程度に落ちる
@@ -277,34 +343,41 @@
    ============================================================ */
 
 /* ── ブロック定義 ───────────────────────────────── */
+/* 呼び名はすべて、初めて読む人がその場で分かる言葉にする。
+   「余白」「重い」「本体」「意味」「掘る／広げる」は、書いた側にしか通じていなかった。
+   ここで使ってよいのは、説明なしで読める言葉だけ。 */
 const BLK = {
-  time:{n:'時間の見え方',           c:'var(--b1)'},
-  unc :{n:'まだ分からないことの見え方', c:'var(--b2)'},
-  self:{n:'自分と他人のあいだ',       c:'var(--b3)'},
-  mng :{n:'意味の見つけ方',          c:'var(--b4)'},
-  chg :{n:'変わることの見え方',       c:'var(--b5)'},
-  knw :{n:'知ることの動機',          c:'var(--b6)'}
+  time:{n:'時間の感じ方',                 c:'var(--b1)'},
+  unc :{n:'まだ分からないことへの感じ方',   c:'var(--b2)'},
+  self:{n:'他人との境目の感じ方',          c:'var(--b3)'},
+  rule:{n:'決まりごとへの考え方',          c:'var(--b7)'},
+  mng :{n:'やりがいの感じ方',              c:'var(--b4)'},
+  chg :{n:'変わることへのとらえ方',        c:'var(--b5)'},
+  knw :{n:'知ることへの向き合い方',        c:'var(--b6)'}
 };
 
 /* ── 下位次元定義 ───────────────────────────────
    連続量は lo（0側）と hi（100側）の呼び名を持つ。
    cat は分類。専門用語は使わない（§5）。            */
 const SUB = {
-  tcen:{blk:'time',n:'時間の重心',       cat:['past','now','future']},
-  fini:{blk:'time',n:'終わりの見えかた', lo:'時間はまだ十分ある', hi:'使える時間には限りがある'},
-  redo:{blk:'time',n:'やり直せるか',     lo:'選び直しはきかない', hi:'あとからやり直せる'},
-  dens:{blk:'time',n:'時間の詰まり方',   lo:'流れていく',        hi:'一日一日が別物'},
-  unkn:{blk:'unc' ,n:'知らないことの顔', lo:'まず脅威に見える',  hi:'まず余白に見える'},
-  gain:{blk:'unc' ,n:'失うことと得ること',lo:'失うほうが重い',   hi:'得るほうが重い'},
-  ctrl:{blk:'unc' ,n:'結果は誰の手にあるか',lo:'めぐり合わせ',   hi:'自分の選択'},
-  perm:{blk:'self',n:'人の感情の入りやすさ',lo:'入ってきにくい', hi:'そのまま入ってくる'},
-  fiel:{blk:'self',n:'自分と場、どちらが本体か',lo:'自分が本体', hi:'関係が本体'},
-  mean:{blk:'mng' ,n:'意味はどこから来るか',lo:'内から湧く',     hi:'外から与えられる'},
-  narr:{blk:'mng' ,n:'つながりで見るか',  lo:'その都度で見る',   hi:'一本の流れで見る'},
-  wide:{blk:'chg' ,n:'掘るか、広げるか',  lo:'深く掘る',         hi:'広く広げる'},
-  trig:{blk:'chg' ,n:'何が自分を変えるか',cat:['inner','outer','person','limit']},
-  know:{blk:'knw' ,n:'なぜ知りたいのか',  cat:['curio','util','anx']},
-  take:{blk:'knw' ,n:'知の取り込み方',    lo:'言葉と筋道から',   hi:'やってみて体から'}
+  tcen:{blk:'time',n:'心が向いている時間',       cat:['past','now','future']},
+  fini:{blk:'time',n:'人生の時間の見えかた',     lo:'まだたっぷりある',   hi:'限りがある'},
+  redo:{blk:'time',n:'選び直せると感じるか',     lo:'一度決めたら戻れない', hi:'あとからやり直せる'},
+  dens:{blk:'time',n:'日々の過ぎかた',           lo:'あっという間に過ぎる', hi:'一日一日が濃い'},
+  unkn:{blk:'unc' ,n:'知らないことに出会ったとき',lo:'まず心配になる',    hi:'まず楽しみになる'},
+  gain:{blk:'unc' ,n:'決めるとき、先に考えるのは',lo:'損をしないこと',    hi:'得をすること'},
+  ctrl:{blk:'unc' ,n:'うまくいくかは何で決まるか',lo:'運やめぐり合わせ',  hi:'自分のやり方しだい'},
+  perm:{blk:'self',n:'まわりの気分に受ける影響',  lo:'あまり影響されない', hi:'そのまま自分に移る'},
+  fiel:{blk:'self',n:'自分らしくいられるのは',    lo:'一人でいるとき',    hi:'誰かといるとき'},
+  norm:{blk:'rule',n:'決まりごとの受けとめかた',  lo:'決まっているなら守る', hi:'中身しだいで決める'},
+  rank:{blk:'rule',n:'立場の上下の見えかた',      lo:'自然にあるもの',    hi:'その場の都合'},
+  fram:{blk:'rule',n:'決まりがあることを',        lo:'窮屈に感じる',      hi:'楽に感じる'},
+  mean:{blk:'mng' ,n:'やりがいが生まれるのは',    lo:'自分がやりたいとき', hi:'誰かの役に立つとき'},
+  narr:{blk:'mng' ,n:'これまでの出来事は',        lo:'その時々の別々のこと', hi:'いまにつながる一本の流れ'},
+  wide:{blk:'chg' ,n:'興味の向かいかた',          lo:'一つを掘り下げる',  hi:'あちこちに手を伸ばす'},
+  trig:{blk:'chg' ,n:'自分が変わるきっかけ',      cat:['inner','outer','person','limit']},
+  know:{blk:'knw' ,n:'知りたくなる理由',          cat:['curio','util','anx']},
+  take:{blk:'knw' ,n:'新しいことの覚えかた',      lo:'説明を読んでから',  hi:'やってみながら'}
 };
 
 const CATNAME = {
@@ -320,7 +393,7 @@ const CATNAME = {
 const Q = [
 
 /* ══ 時間の見え方 ══════════════════════════════ */
-/* 時間の重心【検証用】── 第0層「考えが向かう先」を、まったく違う聞き方で測る */
+/* 時間の重心【検証用】── 第0＋1層「考えが向かう先」を、まったく違う聞き方で測る */
 {p:"tcen",type:"cat",q:"ふと自分の人生について考えたとき、頭に浮かんでいる場面は。",o:[
   {t:"これまでにあった出来事",d:"past"},
   {t:"いまの暮らしの中の光景",d:"now"},
@@ -371,7 +444,7 @@ const Q = [
   a:"どんなときでも、だいたい同じ答えになる",b:"時期や状況によって、まったく違う答えになる"},
 
 /* ══ まだ分からないことの見え方 ═════════════════ */
-/* 知らないことの顔【検証用】── 第0層の基底＋戻る力からの予測を確かめる */
+/* 知らないことの顔【検証用】── 第0＋1層の基底＋戻る力からの予測を確かめる */
 {p:"unkn",type:"bi",q:"行き先を決めずに出かけることになりました。最初に来るのは。",
   a:"何が起きるか分からない、という不安",
   b:"何が起きるか分からない、という楽しみ"},
@@ -431,6 +504,46 @@ const Q = [
   b:"自分の中にあるもの",rev:true},
 
 {p:"self",type:"bar",q:"ここまでの6問について。相手や場面によって、答えはどれくらい変わりそうですか。",
+  a:"どんなときでも、だいたい同じ答えになる",b:"相手や場面によって、まったく違う答えになる"},
+
+/* ══ 決まりごとの見え方（v0.2で追加）════════════════
+   規範と上下は、もとの18〜19の下位次元の時点で入っていなかった。
+   ルールの見え方はお金の使い方も争いの避け方も予測する側にあるので、
+   第3層ではなく第2層に置く。 */
+/* 決まりごとの重さ ── それ自体に重みがあるか、中身しだいか */
+{p:"norm",type:"bi",q:"誰も困らないと分かっている決まりが、形だけ残っています。あなたにとってそれは。",
+  a:"決まっている以上、守るものだと感じる",
+  b:"意味がないなら、なくてよいと感じる"},
+{p:"norm",type:"bi",q:"初めての場所で、そこの決まりを知ったとき。",
+  a:"なぜそうなっているのかを、先に知りたくなる",
+  b:"そういうものかと、そのまま受け取る",rev:true},
+{p:"norm",type:"bi",q:"自分が決まりを作る側になったとき、大事にしたいのは。",
+  a:"きちんと守られること",
+  b:"何のための決まりかが伝わること"},
+
+/* 上下の見えかた ── 自然にあるものか、便宜上のものか */
+{p:"rank",type:"bi",q:"人が何人か集まったときに生まれる上下について。",
+  a:"どんな集まりにも、自然と序列ができるものだと思う",
+  b:"序列があるように見えても、その場だけの都合だと思う"},
+{p:"rank",type:"bi",q:"役職や肩書きで呼ばれる場面で感じるのは。",
+  a:"便宜上の呼び方だ、という感じ",
+  b:"その立場にふさわしく振る舞うべきだ、という感じ",rev:true},
+{p:"rank",type:"bi",q:"自分よりずっと立場が上の人と話すとき。",
+  a:"立場の差を意識して、言葉を選ぶ",
+  b:"相手が誰でも、言うことはあまり変わらない"},
+
+/* 枠は守るか、縛るか ── 決まりごとが自分にとって何か */
+{p:"fram",type:"bi",q:"手順が細かく決まっている仕事について。",
+  a:"窮屈に感じる",
+  b:"迷わなくて済んで、ありがたい"},
+{p:"fram",type:"bi",q:"予定も段取りも決まっている一日と、何も決まっていない一日。",
+  a:"決まっているほうが落ち着く",
+  b:"決まっていないほうが落ち着く",rev:true},
+{p:"fram",type:"bi",q:"新しい環境に入ったとき、先に知っておきたいのは。",
+  a:"どこまで自由にやってよいか",
+  b:"何をしてはいけないか"},
+
+{p:"rule",type:"bar",q:"ここまでの9問について。相手や場面によって、答えはどれくらい変わりそうですか。",
   a:"どんなときでも、だいたい同じ答えになる",b:"相手や場面によって、まったく違う答えになる"},
 
 /* ══ 意味の見つけ方 ════════════════════════════ */
@@ -521,36 +634,106 @@ const Q = [
 ];
 
 /* ══════════════════════════════════════════════════════════
-   回答の送り先（第0層と同じ運用）と、第0層へのリンク
+   回答の送り先（第0＋1層と同じ運用）と、第0＋1層へのリンク
 
-   L0_URL … 第0層のURL。入れると導入画面に「第0層を先に受ける」リンクが出る。
-            GitHub Pages で layer2/ に置いた場合は "../" でよい。
+   L0_URL … 第0＋1層のURL。入れると導入画面に「第0＋1層を先に受ける」リンクが出る。
+            入口ページ方式なら "../layer0/"。
    ══════════════════════════════════════════════════════════ */
 const FORM_URL = "";
-const L0_URL   = "../";
+const L0_URL   = "../layer0/";
+
+/* ══════════════════════════════════════════════════════════
+   回答の送り先（Apps Script のウェブアプリ）
+   第0＋1層と同じURLを貼ること。層は書き出しの版番号で振り分けられる。
+   空のままなら送信欄そのものが出ない。
+   ══════════════════════════════════════════════════════════ */
+const ENDPOINT = "";
+
+/* ── 回答ID と 人ID ────────────────────────────────────
+   pid は第0＋1層が発行してこの端末に保存したものを、そのまま引き継ぐ。
+   別の端末で第0＋1層を受けた人が結果を貼り付けた場合は、
+   その中の pid を優先する（下の loadL0 と引き継ぎ処理を参照）。 */
+function uid(){
+  try{ if(crypto && crypto.randomUUID) return crypto.randomUUID(); }catch(e){}
+  return 'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,10);
+}
+function getPID(){
+  try{
+    let p=localStorage.getItem('kankaku_pid');
+    if(!p){ p=uid(); localStorage.setItem('kankaku_pid',p); }
+    return p;
+  }catch(e){ return uid(); }
+}
+const RID = uid();
+let   PID = getPID();
+const DEV = matchMedia('(hover:none)').matches ? 'sp' : 'pc';
+
+/** 貼り付けや引き継ぎで第0＋1層が入ったとき、人IDをそちらに合わせる */
+function adoptPID(o){
+  if(o && o.pid){
+    PID = o.pid;
+    try{ localStorage.setItem('kankaku_pid', o.pid); }catch(e){}
+  }
+}
 
 /* ── 際立ち度の基準 ────────────────────────────
    実データが30〜50件たまったら実測値に差し替える。
    偏差値は単調変換なので、基準がずれても順位関係は壊れない。 */
 const SO_REF = {  // [中央からの距離の平均, ばらつき] ── 暫定
   fini:[20,12], redo:[20,12], dens:[20,12], unkn:[20,12], gain:[20,12], ctrl:[20,12],
-  perm:[20,12], fiel:[20,12], mean:[20,12], narr:[20,12], wide:[20,12], take:[20,12]
+  perm:[20,12], fiel:[20,12], norm:[20,12], rank:[20,12], fram:[20,12],
+  mean:[20,12], narr:[20,12], wide:[20,12], take:[20,12]
 };
 const SO_PROVISIONAL = true;
 
+const VER = "L2-v0.2";
 const SCALE = ["Aに近い","ややA","ややB","Bに近い"];
 let idx=0, ans=new Array(Q.length).fill(null), t0=0, times=[], tPrev=0;
 const TOUCH = matchMedia('(hover:none)').matches;
-let L0 = null;   // 第0層の結果（任意）
+let L0 = null;   // 第0＋1層の結果（任意）
 
-/* 第0層へのリンク。L0_URL が空なら何も出さない */
+/* 第0＋1層へのリンク。L0_URL が空なら何も出さない */
 if(L0_URL){
   document.getElementById('l0link').innerHTML =
-    '<br><a href="'+L0_URL+'" style="color:var(--accent)">先に第0層を受ける</a>';
+    '<br><a href="'+L0_URL+'" style="color:var(--accent)">先に0＋1層を受ける</a>';
+}
+
+/* ── 同じ端末で第0＋1層を受けていれば、貼り付けずに引き継ぐ ──
+   第0＋1層と第2層は同じサイトの中にあるので、この端末の中だけで結果を渡せる。
+   保存が禁止されている環境（プライベートブラウズなど）では黙って諦め、
+   これまでどおり貼り付け欄を使ってもらう。 */
+(function(){
+  let raw=null;
+  try{ raw=localStorage.getItem('kankaku_L0'); }catch(e){ return; }
+  if(!raw) return;
+  let o; try{ o=JSON.parse(raw); }catch(e){ return; }
+  if(!o || !o.sc || typeof o.sc.dep!=='number') return;
+  L0=o; adoptPID(o);
+  const msg=document.getElementById('l0msg');
+  msg.className='l0msg ok';
+  msg.innerHTML='この端末で受けた0＋1層の結果を引き継ぎました。'+
+    '<b>'+(o.sc.type||o.sc.b||'—')+'</b>'+(o.at?'（'+o.at.replace('T',' ')+'）':'')+
+    '　貼り付けは要りません。<br>'+
+    '<a href="#" onclick="clearL0();return false" style="color:var(--sub)">別の結果を使う</a>';
+  const box=document.getElementById('l0input');
+  box.style.display='none';
+  box.previousElementSibling.style.display='none';
+  document.getElementById('l0btn').style.display='none';
+})();
+
+/* 引き継ぎを取り消して、手で貼り付ける状態に戻す */
+function clearL0(){
+  L0=null;
+  try{ localStorage.removeItem('kankaku_L0'); }catch(e){}
+  const box=document.getElementById('l0input');
+  box.style.display=''; box.previousElementSibling.style.display='';
+  document.getElementById('l0btn').style.display='';
+  const msg=document.getElementById('l0msg');
+  msg.className='l0msg'; msg.textContent='引き継ぎを取り消しました。別の結果を貼り付けてください。';
 }
 
 /* ============================================================
-   第0層の読み込み
+   第0＋1層の読み込み
    ============================================================ */
 function loadL0(){
   const el=document.getElementById('l0input'), msg=document.getElementById('l0msg');
@@ -559,18 +742,71 @@ function loadL0(){
   let o;
   try{ o=JSON.parse(raw); }
   catch(e){ msg.className='l0msg ng';
-    msg.textContent='うまく読めませんでした。第0層の結果画面にある文字列を、途中で切れないよう全部貼ってください。'; return; }
+    msg.textContent='うまく読めませんでした。0＋1層の結果画面にある文字列を、途中で切れないよう全部貼ってください。'; return; }
   if(!o || !o.sc || typeof o.sc.dep!=='number'){
-    msg.className='l0msg ng'; msg.textContent='第0層の結果ではないようです。'; return;
+    msg.className='l0msg ng'; msg.textContent='0＋1層の結果ではないようです。'; return;
   }
-  L0=o;
+  L0=o; adoptPID(o);
   msg.className='l0msg ok';
-  msg.textContent='読み込みました。第0層の結果は「'+(o.sc.type||o.sc.b||'—')+'」。結果画面で答え合わせをします。';
+  msg.textContent='読み込みました。0＋1層の結果は「'+(o.sc.type||o.sc.b||'—')+'」。結果画面で答え合わせをします。';
 }
 
 /* ============================================================
    設問の表示
    ============================================================ */
+/* ============================================================
+   途中保存 ── 回答のたびに、この端末の中だけに控える
+
+   24時間で期限切れにしている。この診断は「最初に浮かんだもの」を
+   測っているので、日をまたいで再開すると、そのときの気分が混ざる。
+   再開した回答には印を付けて送り、あとで分けて集計できるようにする。
+   保存できない環境（プライベートブラウズ等）では黙って諦める。
+   ============================================================ */
+const WIPKEY='kankaku_L2_wip', WIP_TTL=24*60*60*1000;
+let resumed=0, sessions=1;
+
+function saveWip(){
+  try{ localStorage.setItem(WIPKEY, JSON.stringify(
+    {v:VER, at:Date.now(), idx:idx, ans:ans, times:times, el:Date.now()-t0, ses:sessions})); }catch(e){}
+}
+function clearWip(){ try{ localStorage.removeItem(WIPKEY); }catch(e){} }
+function loadWip(){
+  try{
+    const raw=localStorage.getItem(WIPKEY); if(!raw) return null;
+    const w=JSON.parse(raw);
+    if(w.v!==VER) return null;                      /* 版が違えば使わない */
+    if(Date.now()-w.at > WIP_TTL){ clearWip(); return null; }
+    if(!w.ans || w.ans.length!==Q.length || !w.idx) return null;
+    return w;
+  }catch(e){ return null; }
+}
+function showResume(){
+  const w=loadWip(); if(!w) return;
+  const box=document.getElementById('resumebox'); if(!box) return;
+  const h=Math.round((Date.now()-w.at)/3600000);
+  box.innerHTML='<p class="desc" style="margin:0 0 4px"><b>前回の続きが残っています。</b></p>'+
+    '<p class="desc" style="margin:0 0 16px;font-size:14.5px">'+w.idx+' / '+Q.length+'問目まで答えてありました'+
+    (h>=1?'（'+h+'時間前）':'（さきほど）')+'。</p>'+
+    '<button class="btn" onclick="resume()">続きから</button>'+
+    '<button class="btn ghost" onclick="restart()" style="margin-left:10px">最初から</button>'+
+    '<p class="note">控えはこの端末の中だけに置かれます。24時間で消えます。<br>'+
+    '日をまたぐと、そのときの気分が混ざるので、時間が経っていれば最初からをおすすめします。</p>';
+  box.classList.remove('hidden');
+}
+function resume(){
+  const w=loadWip(); if(!w) return start();
+  idx=w.idx; ans=w.ans; times=w.times||[];
+  sessions=(w.ses||1)+1; resumed=1;
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('quiz').classList.remove('hidden');
+  t0=Date.now()-(w.el||0); tPrev=Date.now();
+  render();
+}
+function restart(){
+  clearWip();
+  const b=document.getElementById('resumebox'); if(b) b.classList.add('hidden');
+}
+
 function start(){
   t0=Date.now(); tPrev=t0;
   document.getElementById('intro').classList.add('hidden');
@@ -580,24 +816,53 @@ function start(){
 
 function blockOf(q){ return q.type==='bar' ? q.p : SUB[q.p].blk; }
 
+/* ── バーの前に、直前の設問と自分の答えを並べる ──
+   バーが専用5問より精度が高い（相関0.76〜0.90 対 0.68）根拠は、
+   「直前に答えた直後で記憶が新しいこと」だった。
+   ところが実際には5問前は思い出せない。ここを見せて、根拠を成立させる。 */
+function cut(t,n){ t=String(t); return t.length>n ? t.slice(0,n)+'…' : t; }
+function answerLabel(q,a){
+  if(a===null||a===undefined) return '—';
+  if(q.type==='bi'){ const side=a<=1?q.a:q.b; return SCALE[a]+'　'+cut(side,20); }
+  return cut(q.o[a].t,22);
+}
+function recallHTML(q){
+  const mine=[];
+  for(let i=idx-1;i>=0;i--){
+    const p=Q[i];
+    if(p.type==='bar') break;
+    if(blockOf(p)!==blockOf(q)) break;
+    mine.unshift([i,p]);
+  }
+  if(!mine.length) return '';
+  let h='<div class="recall"><p class="h">ここまでの'+mine.length+'問と、あなたの答え</p>';
+  mine.forEach(([i,p])=>{
+    h+='<div>'+cut(p.q,24)+'　<b>→ '+answerLabel(p,ans[i])+'</b></div>';
+  });
+  return h+'</div>';
+}
+
 function render(){
   const q=Q[idx];
   document.getElementById('progbar').style.width=(idx/Q.length*100)+'%';
-  document.getElementById('count').textContent=String(idx+1).padStart(2,'0')+' / '+Q.length;
+  document.getElementById('count').textContent=String(idx+1).padStart(2,'0')+' / '+Q.length+'　　あと'+(Q.length-idx-1)+'問';
   document.getElementById('blkname').textContent=BLK[blockOf(q)].n;
   document.getElementById('qtext').textContent=q.q;
   document.getElementById('backbtn').style.visibility = idx===0?'hidden':'visible';
   const box=document.getElementById('answers'); box.innerHTML='';
+  document.getElementById('creed').innerHTML='考え込まず、<b>最初に浮かんだほう</b>を選んでください。正解を探すと結果が濁ります';
 
   if(q.type==='bar'){
     /* バーは動かすまで「次へ」を押せない。
        これがないと大半が50%のまま通過する（仕様書 §1.4） */
     document.getElementById('hint').textContent='';
+    document.getElementById('creed').innerHTML='さきほどの答えを見ながらで構いません。<b>思い出せる範囲</b>で、感覚で決めてください';
     const w=document.createElement('div'); w.className='barwrap';
     w.innerHTML='<div class="barends"><span>'+q.a+'</span><span style="text-align:right">'+q.b+'</span></div>'+
       '<input type="range" min="0" max="100" step="5" value="50" id="bar">'+
       '<div class="barval" id="barval">バーを動かしてください</div>';
     box.appendChild(w);
+    const rc=document.createElement('div'); rc.innerHTML=recallHTML(q); box.appendChild(rc);
     const btn=document.createElement('button'); btn.className='btn'; btn.textContent='次へ';
     btn.style.cssText='margin-top:18px;opacity:.35;pointer-events:none'; box.appendChild(btn);
     const r=document.getElementById('bar'), lab=document.getElementById('barval');
@@ -632,7 +897,7 @@ function render(){
 
 function choose(i){
   ans[idx]=i; const n=Date.now(); times[idx]=n-tPrev; tPrev=n; idx++;
-  if(idx>=Q.length){ finish(); } else { render(); }
+  if(idx>=Q.length){ clearWip(); finish(); } else { saveWip(); render(); }
 }
 function back(){ if(idx>0){ idx--; render(); } }
 
@@ -720,30 +985,36 @@ function score(){
    ============================================================ */
 /* 各下位次元の、寄った側の説明。良し悪しは書かない（横軸に優劣はない） */
 const DESC = {
- fini:{lo:'時間はまだ十分にあるものとして感じられています。焦って選ばずに済む一方、締め切りのない事柄は後ろへ流れやすくなります。',
-       hi:'使える時間には限りがある、という感覚が背景で鳴っています。選ぶのが速くなる一方、何もしない時間に軽い焦りが混じります。'},
- redo:{lo:'選択はやり直しがきかないものとして見えています。だから慎重に選び、選んだものを大事にします。裏返せば、降りるという選択肢が浮かびにくい。',
-       hi:'たいていのことはあとから修正できると感じています。だから動き出しが軽い。裏返せば、腰を据えて続ける理由が薄くなることがあります。'},
- dens:{lo:'時間は均された流れとして過ぎていきます。日々に振り回されず落ち着いていられる一方、一年があっという間に感じられます。',
+ fini:{lo:'人生の時間は、まだたっぷりあるものとして感じられています。焦って選ばずに済む一方、締め切りのないことは後ろへ流れやすくなります。',
+       hi:'人生の時間には限りがある、という感覚が背景にあります。選ぶのが速くなる一方、何もしない時間に軽い焦りが混じります。'},
+ redo:{lo:'一度決めたことは、やり直しがきかないものとして見えています。だから慎重に選び、選んだものを大事にします。裏返せば、降りるという選択肢が浮かびにくい。',
+       hi:'たいていのことはあとから選び直せると感じています。だから動き出しが軽い。裏返せば、腰を据えて続ける理由が薄くなることがあります。'},
+ dens:{lo:'日々はならされた流れとして過ぎていきます。振り回されず落ち着いていられる一方、一年があっという間に感じられます。',
        hi:'一日一日が別のものとして刻まれています。記憶が細かく残り、時間が長く感じられる一方、日々の出来事に消耗しやすくもあります。'},
- unkn:{lo:'まだ分からないことは、まず備えるべきものとして現れます。危ないところに気づくのが早い一方、決まっていない状態そのものが負荷になります。',
-       hi:'まだ分からないことは、まず余白として現れます。決まっていない状態を楽しめる一方、詰めが甘くなることがあります。'},
- gain:{lo:'失うことのほうが、得ることより重く感じられます。守りの判断が正確になる一方、手に入ったはずのものが視界に入りにくい。',
-       hi:'得られるもののほうが、失うものより大きく見えます。動き出せる一方、下がる側の見積もりが甘くなりがちです。'},
- ctrl:{lo:'結果はめぐり合わせで決まる、という感覚があります。うまくいかないときに自分を責めずに済む一方、変えられる部分にも手が伸びにくい。',
-       hi:'結果は自分の選択で決まる、という感覚があります。手を打ち続けられる一方、どうにもならないことまで背負い込みがちです。'},
+ unkn:{lo:'まだ分からないことに出会うと、まず心配が来ます。危ないところに気づくのが早い一方、決まっていない状態そのものが負担になります。',
+       hi:'まだ分からないことに出会うと、まず楽しみが来ます。決まっていない状態を面白がれる一方、詰めが甘くなることがあります。'},
+ gain:{lo:'なにかを決めるとき、損をしないことのほうを先に考えます。守りの判断が正確になる一方、手に入ったはずのものが視界に入りにくい。',
+       hi:'なにかを決めるとき、得られるもののほうを先に考えます。動き出せる一方、うまくいかなかったときの見積もりが甘くなりがちです。'},
+ ctrl:{lo:'うまくいくかどうかは、運やめぐり合わせで決まるという感覚があります。うまくいかないときに自分を責めずに済む一方、変えられる部分にも手が伸びにくい。',
+       hi:'うまくいくかどうかは、自分のやり方しだいという感覚があります。手を打ち続けられる一方、どうにもならないことまで背負い込みがちです。'},
  perm:{lo:'人の感情は、情報としては届きますが、自分の状態までは変えません。場に飲まれずにいられる一方、察していないと受け取られることがあります。',
        hi:'その場にある感情が、そのまま自分の中に入ってきます。人の状態がよく分かる一方、誰の感情なのか区別がつきにくくなります。'},
- fiel:{lo:'あなたの本体は、関係の外にある「自分」の側にあります。一人でも自分が保たれる一方、関係の中で自分を差し出すことに慎重になります。',
-       hi:'あなたの本体は、誰かとのあいだに立ち上がります。関係の中で力が出る一方、関係が切れたときに自分の輪郭が薄くなります。'},
- mean:{lo:'意味は自分の内側から湧いてきます。誰も見ていなくても続けられる一方、外の評価が意味に変換されにくい。',
-       hi:'意味は、誰かとの関わりの中で与えられます。求められれば力が出る一方、求められない時期に意味が枯れやすい。'},
- narr:{lo:'意味はその日その日の中にあり、出来事どうしをつなげる必要をあまり感じません。目の前に集中できる一方、「これまで」を語る言葉が持ちにくい。',
-       hi:'出来事は一本の流れとしてつながって見えます。経験が積み上がっていく感覚がある一方、流れに合わない出来事の置き場に困ります。'},
- wide:{lo:'ひとつのところを深く掘るほうに向かいます。積み上がりが速い一方、掘っている穴の外が見えにくくなります。',
-       hi:'新しいところへ広げるほうに向かいます。視野が広がる一方、どれも途中で止まりやすい。'},
- take:{lo:'知は、言葉と筋道から入ってきます。全体像を先に持てる一方、やってみるまでの助走が長くなります。',
-       hi:'知は、やってみることで体から入ってきます。立ち上がりが速い一方、言葉にして人に渡すのに時間がかかります。'}
+ fiel:{lo:'自分らしくいられるのは、一人でいるときです。一人でも自分が保たれる一方、関係の中で自分を差し出すことには慎重になります。',
+       hi:'自分らしくいられるのは、誰かといるときです。関係の中で力が出る一方、その関係が切れたときに自分の輪郭が薄くなります。'},
+ norm:{lo:'決まりごとは、中身がどうであれ、決まっているなら守るものとして受けとめています。約束が守られる場所を作れる一方、形だけになった決まりも残り続けます。',
+       hi:'決まりごとは、中身と目的しだいで扱いが変わります。形だけのものを整理できる一方、周りからは線引きが読みにくく見えることがあります。'},
+ rank:{lo:'人が集まれば上下は自然に生まれるもの、として見えています。場の中での位置がすぐ分かる一方、その位置を疑いにくくなります。',
+       hi:'上下は、都合で決めた取り決めとして見えています。相手が誰でも同じように向き合える一方、順序を踏むことが求められる場では摩擦が起きます。'},
+ fram:{lo:'決まりがあることを、窮屈に感じます。まかされる場所で力が出る一方、決まりのない状態が続くとかえって消耗することには気づきにくい。',
+       hi:'決まりがあることを、楽だと感じます。やることがはっきりしている場所で落ち着いて力を出せる一方、まかされると何をしてよいか決めかねます。'},
+ mean:{lo:'やりがいは、自分がやりたいと思えるかどうかから生まれます。誰も見ていなくても続けられる一方、外からの評価がやりがいに変わりにくい。',
+       hi:'やりがいは、誰かの役に立っていると分かったときに生まれます。求められれば力が出る一方、求められない時期にやりがいが枯れやすい。'},
+ narr:{lo:'これまでの出来事は、その時々の別々のこととして見えています。目の前に集中できる一方、これまでを一続きの話として語る言葉は持ちにくい。',
+       hi:'これまでの出来事は、いまにつながる一本の流れとして見えています。経験が積み上がっていく感覚がある一方、その流れに合わない出来事の置き場に困ります。'},
+ wide:{lo:'興味は、ひとつのことを掘り下げるほうへ向かいます。積み上がりが速い一方、いま見ているものの外が視界に入りにくくなります。',
+       hi:'興味は、あちこちへ手を伸ばすほうへ向かいます。見えるものが広がる一方、どれも途中で止まりやすい。'},
+ take:{lo:'新しいことは、言葉と筋道から入ってきます。全体像を先に持てる一方、やってみるまでの助走が長くなります。',
+       hi:'新しいことは、やってみることで体から入ってきます。立ち上がりが速い一方、言葉にして人に渡すのには時間がかかります。'}
 };
 const CATDESC = {
  tcen:{past:'時間の重心は過去にあります。いま起きていることも、しばしば「済んだこと」として整理されてから手元に届きます。',
@@ -782,7 +1053,9 @@ function buildProse(){
   const p=[];
   p.push(CATDESC.tcen[S.c.tcen.pick] + DESC.fini[side('fini')] + DESC.dens[side('dens')]);
   p.push(DESC.unkn[side('unkn')] + DESC.gain[side('gain')] + DESC.ctrl[side('ctrl')]);
-  p.push(DESC.perm[side('perm')] + DESC.fiel[side('fiel')] + DESC.mean[side('mean')] + DESC.narr[side('narr')]);
+  p.push(DESC.perm[side('perm')] + DESC.fiel[side('fiel')]);
+  p.push(DESC.norm[side('norm')] + DESC.rank[side('rank')] + DESC.fram[side('fram')]);
+  p.push(DESC.mean[side('mean')] + DESC.narr[side('narr')]);
   p.push(DESC.wide[side('wide')] + CATDESC.trig[S.c.trig.pick] + CATDESC.know[S.c.know.pick] + DESC.take[side('take')]);
   document.getElementById('prose').innerHTML = p.map(x=>'<p>'+x+'</p>').join('');
 }
@@ -805,6 +1078,12 @@ const LINE = {
        hi:'誰かの機嫌が悪いと、理由が自分に関係なくても消耗する'},
  fiel:{lo:'一人の時間がないと、自分が戻ってこない感じがする',
        hi:'一人でいるときの自分は、なんだか薄い感じがする'},
+ norm:{lo:'意味がないと分かっている手続きでも、抜かすと落ち着かない',
+       hi:'形だけになっている決まりを見ると、なくせばいいのにと思う'},
+ rank:{lo:'相手の立場によって、自分の話し方がけっこう変わる',
+       hi:'偉い人を前にしても、態度があまり変わらないと言われる'},
+ fram:{lo:'「自由にやっていい」と言われたときが、いちばん動きやすい',
+       hi:'「自由にやっていい」と言われると、かえって困る'},
  mean:{lo:'誰にも評価されなくても、続けているものがある',
        hi:'必要とされていない時期に、急にやる気がなくなる'},
  narr:{lo:'これまでの人生を一続きの話として語るのが、少し苦手',
@@ -815,11 +1094,12 @@ const LINE = {
        hi:'説明を聞いている途中で、もう触りはじめている'}
 };
 
-let hits={};
+let hits={}, hitSide={};
 function buildHits(){
   const ks=Object.keys(LINE).sort((a,b)=>dist(b)-dist(a)).slice(0,5);
   const box=document.getElementById('hits'); box.innerHTML='';
   ks.forEach(k=>{
+    hitSide[k]=side(k);            /* 高低どちらの文が出たかを記録。集計で必要 */
     const txt=LINE[k][side(k)];
     const d=document.createElement('div'); d.className='hit';
     d.innerHTML='<div class="t">'+txt+'</div>';
@@ -834,32 +1114,58 @@ function buildHits(){
   });
 }
 
-/* ── 6つの見え方の図。文章の補強にとどめる（§5） ── */
+/* ── 7つの見え方。文章の補強にとどめる（§5） ──
+   並べ替えを2通り持つ。
+     ブロック順 … 構造を説明するときの順序
+     際立ち順   … 本人が自分の輪郭を掴むときの順序。上から読むだけでよい
+   「一枚で全体を見たい」には、図を足すのではなく並べ替えで応える。 */
+let mapSort='blk';
+
+/* 際立ちの強さ。連続量は中央からの距離、分類は3問の揃い方 */
+function ord(k){ return SUB[k].cat ? (S.c[k].n-1)/2*100 : dist(k)*2; }
+
+function mapRow(k){
+  const s=SUB[k], c=BLK[s.blk].c;
+  const d=document.createElement('div'); d.className='sl';
+  const nm='<div class="nm">'+s.n+
+    (mapSort==='so' ? '<span class="bn">'+BLK[s.blk].n+'</span>' : '')+'</div>';
+  if(s.cat){
+    const cc=S.c[k], tie=cc.n<2;   /* 3問が全部ばらけた＝首位が並んだ */
+    d.innerHTML=nm+'<div class="cat">'+
+      (tie ? 'どちらとも言えませんでした' : CATNAME[cc.pick])+
+      '<em>'+(tie ? '3問が3つに割れました' : '3問中'+cc.n+'問')+'</em></div>';
+  }else{
+    const v=S.v[k];
+    d.innerHTML=nm+'<div class="bd">'+
+      '<div class="lb r">'+s.lo+'</div>'+
+      '<div class="tr"><span class="tk"></span><span class="mid"></span>'+
+      '<span class="dot" style="left:'+v+'%;background:'+c+'"></span></div>'+
+      '<div class="lb">'+s.hi+'</div></div>';
+  }
+  return d;
+}
+
 function buildMap(){
   const box=document.getElementById('map'); box.innerHTML='';
-  Object.keys(BLK).forEach(b=>{
-    const h=document.createElement('div'); h.className='blkhead';
-    h.textContent=BLK[b].n; h.style.color=BLK[b].c; box.appendChild(h);
-    Object.keys(SUB).filter(k=>SUB[k].blk===b).forEach(k=>{
-      const s=SUB[k];
-      const r=document.createElement('div'); r.className='maprow';
-      if(s.cat){
-        r.innerHTML='<div class="nm">'+s.n+'</div><div style="flex:1;color:var(--ink)">'+
-          CATNAME[S.c[k].pick]+'　<span style="color:var(--sub);font-size:11.5px">'+
-          S.c[k].n+'／3問</span></div>';
-      }else{
-        const v=S.v[k], w=Math.abs(v-50), left=v>=50?50:v;
-        r.innerHTML='<div class="nm">'+s.n+'</div>'+
-          '<div class="tr"><u></u><i style="left:'+left+'%;width:'+w+'%;background:'+BLK[b].c+'"></i></div>';
-      }
-      box.appendChild(r);
-      if(!s.cat){
-        const l=document.createElement('div'); l.className='maplegend';
-        l.innerHTML='<span>'+s.lo+'</span><span>'+s.hi+'</span>';
-        box.appendChild(l);
-      }
-    });
+  const bar=document.createElement('div'); bar.className='sortbar';
+  [['ブロック順','blk'],['際立ち順','so']].forEach(([lab,v])=>{
+    const b=document.createElement('button'); b.textContent=lab;
+    if(mapSort===v) b.classList.add('on');
+    b.onclick=()=>{ mapSort=v; buildMap(); };
+    bar.appendChild(b);
   });
+  box.appendChild(bar);
+
+  if(mapSort==='blk'){
+    Object.keys(BLK).forEach(b=>{
+      const h=document.createElement('div'); h.className='blkhead';
+      h.textContent=BLK[b].n; h.style.color=BLK[b].c; box.appendChild(h);
+      Object.keys(SUB).filter(k=>SUB[k].blk===b).forEach(k=>box.appendChild(mapRow(k)));
+    });
+  }else{
+    Object.keys(SUB).slice().sort((a,b)=>ord(b)-ord(a))
+      .forEach(k=>box.appendChild(mapRow(k)));
+  }
 }
 
 /* ── くわしく見る ── */
@@ -897,7 +1203,7 @@ function buildDetail(){
 }
 
 /* ============================================================
-   第0層からの予測と、その答え合わせ
+   第0＋1層からの予測と、その答え合わせ
    仕様書 §3 の導出仮説を、そのまま検証にかける。
    ここが外れるなら、階層構造そのものを見直す必要がある。
    ============================================================ */
@@ -909,7 +1215,7 @@ function buildPreds(){
   box.innerHTML='';
 
   if(!L0){
-    lead.textContent='第0層の結果が読み込まれていないため、答え合わせはできません。第0層を受けたあと、その結果データを持ってもう一度ここへ来ると、下の6つの予測が検証できます。';
+    lead.textContent='0＋1層の結果が読み込まれていないので、答え合わせはできません。0＋1層を受けたあとにもう一度ここへ来ると、下の7つの予想と突き合わせられます。同じ端末なら、貼り付けの手間はありません。';
     document.getElementById('predsum').textContent='';
     S.pred=null; return;
   }
@@ -928,7 +1234,7 @@ function buildPreds(){
   const pt=tmap[z.tm]||'now';
   P.push({k:'tcen',
     hyp:'考えが向かう先が、そのまま時間の重心になる',
-    say:'第0層であなたは「'+({past:'過去のこと',future:'これからのこと',inner:'自分のこと',outer:'外のこと',stay:'何も考えない'}[z.tm]||'—')+
+    say:'第0＋1層であなたは「'+({past:'過去のこと',future:'これからのこと',inner:'自分のこと',outer:'外のこと',stay:'何も考えない'}[z.tm]||'—')+
         '」でした。ここから、時間の重心は「'+CATNAME[pt]+'」に出ると予測しました。'+
         (deep?'　戻る力が強い方なので、いま側へ引き寄せられる分も見込んでいます。':''),
     pred:CATNAME[pt], act:CATNAME[S.c.tcen.pick], hit:(pt===S.c.tcen.pick)});
@@ -937,15 +1243,15 @@ function buildPreds(){
   const pu = (pleasant||deep) && !tense;
   P.push({k:'unkn',
     hyp:'基底が緊張寄りなら未知は脅威に見える。リスクを取れるのは戻る力から来る',
-    say:'第0層のふだんの心は「'+(z.b||'—')+'」、戻る力は'+z.dep+'％でした。ここから、知らないことは「'+
-        (pu?'まず余白に見える':'まず脅威に見える')+'」と予測しました。',
-    pred:(pu?'余白寄り':'脅威寄り'), act:(S.v.unkn>=50?'余白寄り':'脅威寄り'),
+    say:'第0＋1層のふだんの心は「'+(z.b||'—')+'」、戻る力は'+z.dep+'％でした。ここから、知らないことは「'+
+        (pu?'まず楽しみになる':'まず心配になる')+'」と予測しました。',
+    pred:(pu?'楽しみ寄り':'心配寄り'), act:(S.v.unkn>=50?'楽しみ寄り':'心配寄り'),
     hit:(pu===(S.v.unkn>=50))});
 
   /* 3. 人の感情の入りやすさ ── §3.3 */
   P.push({k:'perm',
     hyp:'満足が生まれる場所が、他人の入ってくる度合いを決める',
-    say:'第0層で満足が生まれる場所は'+z.dir+'％（100が人や物事と関わる側）でした。ここから、人の感情は「'+
+    say:'第0＋1層で満足が生まれる場所は'+z.dir+'％（100が人や物事と関わる側）でした。ここから、人の感情は「'+
         (outw?'そのまま入ってくる':'入ってきにくい')+'」と予測しました。',
     pred:(outw?'入ってきやすい':'入ってきにくい'), act:(S.v.perm>=50?'入ってきやすい':'入ってきにくい'),
     hit:(outw===(S.v.perm>=50))});
@@ -953,7 +1259,7 @@ function buildPreds(){
   /* 4. つながりで見るか ── §3.4 */
   P.push({k:'narr',
     hyp:'落ち着き先が複数ある人は、単一の人生の物語に統合しにくい',
-    say:'第0層で場面によって変わる度合いは'+z.pk+'％でした。ここから、出来事は「'+
+    say:'第0＋1層で場面によって変わる度合いは'+z.pk+'％でした。ここから、出来事は「'+
         (many?'その都度で見る':'一本の流れで見る')+'」と予測しました。'+
         (many?'　これは「自分が何をしたいのか分からない」の構造的な正体かもしれない、という仮説です。':''),
     pred:(many?'その都度':'一本の流れ'), act:(S.v.narr>=50?'一本の流れ':'その都度'),
@@ -962,19 +1268,30 @@ function buildPreds(){
   /* 5. やり直せるか ── §1.2・§3.5 */
   P.push({k:'redo',
     hyp:'「失敗しても必ず元に戻れる」と知っているから、やり直せると感じる',
-    say:'第0層の戻る力は'+z.dep+'％でした。ここから、「あとからやり直せる」感覚は'+
+    say:'第0＋1層の戻る力は'+z.dep+'％でした。ここから、「あとからやり直せる」感覚は'+
         (deep?'強めに':'弱めに')+'出ると予測しました。',
     pred:(deep?'やり直せる寄り':'やり直せない寄り'), act:(S.v.redo>=50?'やり直せる寄り':'やり直せない寄り'),
     hit:(deep===(S.v.redo>=50))});
+
+  /* 7. 枠は守るか、縛るか ── v0.2で追加
+     基底の緊張度が高いと、決まりごとは「自分を守る枠」として見える。
+     §3.6 の「緊張が高いと知は不安解消の手段になる」と同じ論理。
+     緊張は、不確実性を減らしてくれるものを求める。 */
+  P.push({k:'fram',
+    hyp:'ふだんの心が緊張寄りだと、決まりごとは自分を守る枠として見える',
+    say:'第0＋1層のふだんの心は「'+(z.b||'—')+'」でした。ここから、決まりごとは「'+
+        (tense?'迷わなくて済むもの':'自由を削るもの')+'」に見えると予測しました。',
+    pred:(tense?'守るもの寄り':'縛るもの寄り'), act:(S.v.fram>=50?'守るもの寄り':'縛るもの寄り'),
+    hit:(tense===(S.v.fram>=50))});
 
   /* 6. なぜ知りたいのか ── §3.6 */
   const pk2 = tense?'anx':(pleasant?'curio':'util');
   P.push({k:'know',
     hyp:'基底の緊張度が高いと、知は好奇ではなく不安を下げる手段になる',
-    say:'第0層のふだんの心は「'+(z.b||'—')+'」でした。ここから、知りたい理由は「'+CATNAME[pk2]+'」と予測しました。',
+    say:'第0＋1層のふだんの心は「'+(z.b||'—')+'」でした。ここから、知りたい理由は「'+CATNAME[pk2]+'」と予測しました。',
     pred:CATNAME[pk2], act:CATNAME[S.c.know.pick], hit:(pk2===S.c.know.pick)});
 
-  lead.textContent='第0層の結果だけを使って、この6つを先に予測してあります。ここが当たるかどうかが、この診断の土台（心の形が世界の見え方を作っている、という仮説）そのものの検証です。外れても問題はありません。外れたという事実が必要な情報です。';
+  lead.innerHTML='0＋1層の結果<b>だけ</b>を使って、この7つを先に予想してあります。ここで実際に答えてもらった内容とは関係なく、先に出してあるものです。<br>当たるかどうかが、この診断の土台（心の落ち着く場所が、世界の感じ方を作っている）の検証になります。外れても問題ありません。外れたという事実のほうが必要です。';
 
   P.forEach(p=>{
     const d=document.createElement('div'); d.className='pred';
@@ -982,11 +1299,17 @@ function buildPreds(){
       '<p>'+p.say+'</p>'+
       '<p style="color:var(--sub);font-size:13.5px">予測：'+p.pred+'　／　実測：'+p.act+'</p>'+
       '<span class="verdict '+(p.hit?'ok':'ng')+'">'+(p.hit?'一致':'不一致')+'</span>';
+    /* 一致したときは「予測のほう／実測のほう」が同じものを指すので選べない。
+       当たったか外れたかだけを聞く。 */
     const q=document.createElement('div');
     q.style.cssText='margin-top:12px';
-    q.innerHTML='<span class="lbl">あなたの実感としては、どちらが当たっていますか</span>';
+    q.innerHTML='<span class="lbl">'+
+      (p.hit ? 'あなたの実感として、これは当たっていますか'
+             : 'あなたの実感としては、どちらが近いですか')+'</span>';
     const f=document.createElement('div'); f.className='fb';
-    [['予測のほう','p'],['実測のほう','a'],['どちらも違う','x']].forEach(([lab,v])=>{
+    const opts = p.hit ? [['当たっている','y'],['当たっていない','n']]
+                       : [['予測のほう','p'],['実測のほう','a'],['どちらも違う','x']];
+    opts.forEach(([lab,v])=>{
       const b=document.createElement('button'); b.textContent=lab;
       b.onclick=()=>{ fb['p_'+p.k]=v; [...f.children].forEach(c=>c.classList.remove('on'));
         b.classList.add('on'); refreshExport(); };
@@ -995,13 +1318,13 @@ function buildPreds(){
     q.appendChild(f); d.appendChild(q); box.appendChild(d);
   });
 
-  const nHit=P.filter(p=>p.hit).length;
+  const nHit=P.filter(p=>p.hit).length, nAll=P.length;
   document.getElementById('predsum').textContent =
-    '6つのうち '+nHit+' つが一致しました。'+
-    (nHit>=5?'第0層から世界の見え方が導けている、という仮説を支持する結果です。'
-     :nHit===4?'多くが一致しました。外れた分は、その項目の仮説だけを見直せばよさそうです。'
-     :nHit===3?'半分が一致しました。どの仮説が外れたかが、次に直すべき場所です。'
-     :'ほとんど外れました。あなたの場合、第0層と第2層は別々に測る必要がありそうです。これは仮説の側を直す材料になります。');
+    nAll+'つのうち '+nHit+' つが一致しました。'+
+    (nHit>=nAll-1?'心の落ち着く場所から世界の感じ方が導ける、という考えを支持する結果です。'
+     :nHit>=nAll*0.6?'多くが一致しました。外れた分は、その項目の仮説だけを見直せばよさそうです。'
+     :nHit>=nAll*0.4?'半分ほどが一致しました。どの仮説が外れたかが、次に直すべき場所です。'
+     :'ほとんど外れました。あなたの場合、0＋1層と2層は別々に測る必要がありそうです。これは仮説の側を直す材料になります。');
   S.pred={n:nHit, of:P.length, each:P.map(p=>({k:p.k,pred:p.pred,act:p.act,hit:p.hit}))};
 }
 
@@ -1023,7 +1346,7 @@ function finish(){
   document.getElementById('quiz').classList.add('hidden');
   document.getElementById('result').classList.remove('hidden');
   document.getElementById('resultlead').textContent =
-    '感覚診断 第2層 ／ 45問の結果' + (L0?'　＋　第0層との答え合わせ':'');
+    '感覚診断 2層 ／ 54問の結果' + (L0?'　＋　第0＋1層との答え合わせ':'');
   buildStandout();
   buildProse();
   buildHits();
@@ -1031,6 +1354,12 @@ function finish(){
   buildPreds();
   buildDetail();
   buildOverall();
+  document.getElementById('navtext').textContent = L0
+    ? '0＋1層の結果と突き合わせた状態です。0＋1層を受け直すと、この端末の控えが新しいものに入れ替わります。'
+    : '1つめ（心の落ち着く場所）をまだ受けていない場合は、そちらを受けてからここに戻ると、上の答え合わせができるようになります。同じ端末なら、貼り付けの手間はありません。';
+  document.getElementById('navl0').textContent = L0 ? '0＋1層をもう一度' : '0＋1層を受ける';
+  document.getElementById('navl0').href = L0_URL || '../layer0/';
+  if(ENDPOINT) document.getElementById('sendbox').classList.remove('hidden');
   refreshExport();
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1043,25 +1372,75 @@ function finish(){
 function payload(){
   const cat={}; Object.keys(S.c).forEach(k=>cat[k]=S.c[k].pick+':'+S.c[k].n);
   return JSON.stringify({
-    v:"L2-v0.1",
+    v:"L2-v0.2",
+    rid:RID, pid:PID, dev:DEV,
     at:new Date().toISOString().slice(0,16),
     sec:Math.round((Date.now()-t0)/1000),
+    rs:resumed, ses:sessions,
     ans:ans.join(','),
     /* gape（ブロックごとのズレ）は bar − sce で復元できるので入れない */
     sc:{val:S.v, cat:cat, bar:S.vary, sce:S.scEach,
         sct:S.scatter, dec:S.declared, gs:S.gapSigned, so:S.so},
-    /* 予測は「どの仮説が当たったか」だけあれば足りる。予測値と実測値は val から復元できる */
+    /* 導出仮説はこの診断の核なので、明細もそのまま送る。
+       集計側で「仮説ごとの一致率」を偶然の水準と比べるために要る */
     pr:S.pred?{n:S.pred.n, of:S.pred.of,
-               hit:S.pred.each.map(p=>p.k+(p.hit?'+':'-')).join(',')}:null,
+               each:S.pred.each.map(p=>({k:p.k, p:p.pred, a:p.act, h:p.hit}))}:null,
     l0:L0?{v:L0.v, type:L0.sc.type, b:L0.sc.b, dep:L0.sc.dep, pk:L0.sc.pk,
            dir:L0.sc.dir, tm:L0.sc.tm, val:L0.sc.val, aro:L0.sc.aro}:null,
     q:{med:S.medSec, run:S.run, fl:S.flags},
     at2:{age:(document.getElementById('attrAge')||{}).value||'',
          sex:(document.getElementById('attrSex')||{}).value||'',
          nm :((document.getElementById('attrName')||{}).value||'').slice(0,40)},
-    hit:hits, fb:fb,
+    hit:hits, hs:hitSide, fb:fb,
     txt:document.getElementById('freetext').value
   });
+}
+
+/* ============================================================
+   結果を送る ── 第0＋1層とまったく同じ3段構え
+     1. fetch でPOST → 2. 見えない iframe → 3. コピーの欄
+   通信に失敗しても結果は必ず見られること。
+   自動では送らない。本人がボタンを押したときだけ送る。
+   ============================================================ */
+let sent=false;
+/* ── 送信の同意 ────────────────────────────────────
+   回答は端末の中だけで計算され、送信ボタンを押すまで外に出ない。
+   だから同意を取る場所は、診断のはじめではなく「送るとき」。
+   信条に関わる項目は、法律上あつかいが重くなる場合があるため、
+   チェックを入れるまで送信ボタンを押せないようにしてある。 */
+function updSend(){
+  const c=document.getElementById('agree'), b=document.getElementById('sendbtn');
+  if(c&&b){ if(c.checked) b.removeAttribute('disabled'); else b.setAttribute('disabled','disabled'); }
+}
+
+function sendResult(){
+  if(sent) return;
+  const btn=document.getElementById('sendbtn'), msg=document.getElementById('sendmsg');
+  if(!ENDPOINT){ msg.textContent='送り先がまだ設定されていません。'; return; }
+  btn.disabled=true; btn.style.opacity='.5'; msg.textContent='送っています…';
+
+  const body=payload();
+  const done=()=>{ sent=true; btn.textContent='送信しました';
+    msg.textContent='ありがとうございました。結果はこのまま見られますし、PDFにも残せます。'; };
+  const fallbackIframe=()=>{
+    const f=document.createElement('form');
+    f.action=ENDPOINT; f.method='POST'; f.target='gs_sink';
+    const i=document.createElement('input');
+    i.type='hidden'; i.name='payload'; i.value=body;
+    f.appendChild(i); document.body.appendChild(f);
+    try{ f.submit(); setTimeout(()=>{ f.remove(); done(); },1200); }
+    catch(e){
+      btn.disabled=false; btn.style.opacity='1';
+      msg.textContent='うまく送れませんでした。下の枠の文字列をコピーして送ってください。';
+    }
+  };
+  if(window.fetch){
+    fetch(ENDPOINT,{method:'POST',body:body})
+      .then(r=>r.ok?done():fallbackIframe())
+      .catch(fallbackIframe);
+  } else {
+    fallbackIframe();
+  }
 }
 function refreshExport(){
   const s=payload();
@@ -1098,7 +1477,7 @@ function downloadJSON(){
     const b=new Blob([payload()],{type:'application/json'});
     const u=URL.createObjectURL(b);
     const a=document.createElement('a');
-    a.href=u; a.download='感覚診断_第2層_'+new Date().toISOString().slice(0,10)+'.json';
+    a.href=u; a.download='感覚診断_2層_'+new Date().toISOString().slice(0,10)+'.json';
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     setTimeout(()=>URL.revokeObjectURL(u),1000);
     msg.textContent='保存しました。うまくいかない場合は「コピー」をお使いください。';
@@ -1106,6 +1485,9 @@ function downloadJSON(){
     msg.textContent='この端末ではファイル保存ができません。「コピー」をお使いください。';
   }
 }
+
+/* 前回の続きがあれば、はじめる前に案内する */
+try{ showResume(); }catch(e){}
 </script>
 </body>
 </html>
