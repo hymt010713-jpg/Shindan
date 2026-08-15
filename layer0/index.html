@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>感覚診断 — 心の形</title>
+<title>感覚診断 — 心の落ち着く場所</title>
 <style>
   :root{
     --bg:#f7f5f1; --ink:#22201d; --sub:#6b655d; --line:#ddd7cd;
     --card:#fffdfa; --accent:#3f6d5f;
     --q1:#c9922f; /* 快動 期待 */
     --q2:#5b8c7b; /* 快静 安らぎ */
-    --q3:#b5573f; /* 不快動 緊張 */
-    --q4:#5c6b80; /* 不快静 空虚 */
+    --q3:#b5573f; /* 不快動 気がかり */
+    --q4:#5c6b80; /* 不快静 渇き */
     --q0:#8a8378; /* 中庸 */
   }
   *{box-sizing:border-box}
@@ -77,6 +77,8 @@
   .row{margin-bottom:26px}
   .row:last-child{margin-bottom:0}
   .rowh{font-size:15px;margin:0 0 2px;letter-spacing:.04em}
+  .subq{font-size:12.5px;color:var(--sub);letter-spacing:.08em;margin:0 0 8px;
+        border-left:2px solid var(--line);padding-left:10px;line-height:1.6}
   .tilt{display:flex;gap:6px;margin:12px 0 10px}
   .tilt div{flex:1;text-align:center}
   .tilt .bar{height:44px;background:var(--line);border-radius:2px;position:relative;overflow:hidden;margin-bottom:6px}
@@ -120,6 +122,20 @@
   .attr label{font-size:13.5px;color:var(--sub);display:flex;flex-direction:column;gap:6px}
   .attr select,.attr input{font-family:inherit;font-size:14.5px;padding:8px 10px;
     border:1px solid var(--line);border-radius:3px;background:var(--card);color:var(--ink);min-width:150px}
+  .consent{border:1px solid var(--line);border-radius:4px;padding:16px 18px;margin:0 0 18px;background:#fbfaf6}
+  .consent label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:14.5px;line-height:1.7}
+  .consent input{margin-top:6px;width:17px;height:17px;accent-color:var(--accent);flex:0 0 auto}
+  .consent ul{margin:12px 0 0;padding-left:1.2em;font-size:12.5px;color:var(--sub);line-height:1.85}
+  .consent li{margin-bottom:6px}
+  .btn[disabled]{opacity:.35;pointer-events:none}
+  .blkname{font-size:12px;letter-spacing:.16em;color:var(--accent);margin:-18px 0 26px}
+  .creed{font-size:12.5px;color:var(--sub);letter-spacing:.04em;line-height:1.8;
+    margin:20px 0 0;padding-top:14px;border-top:1px solid var(--line)}
+  .recall{border:1px solid var(--line);border-radius:4px;background:#fbfaf6;padding:14px 16px;margin:22px 0 0}
+  .recall p.h{font-size:12px;letter-spacing:.1em;color:var(--sub);margin:0 0 8px}
+  .recall div{font-size:12.5px;line-height:1.65;color:var(--sub);padding:6px 0;border-top:1px solid var(--line)}
+  .recall div:first-of-type{border-top:none}
+  .recall b{color:var(--ink);font-weight:600}
   .hidden{display:none}
   .printonly{display:none}
   @media print{
@@ -156,17 +172,22 @@
 
 <!-- ===== INTRO ===== -->
 <section id="intro">
-  <h1>感覚診断 — 心の形</h1>
-  <p class="lead">プロトタイプ v2.3 ／ 全24問 ／ 所要 7〜10分</p>
+  <h1>感覚診断 — 心の落ち着く場所</h1>
+  <p class="lead">プロトタイプ v2.5 ／ 全24問 ／ 所要 7〜10分</p>
   <div class="card">
-    <p class="desc">この診断は性格を測りません。測るのは、<b>何もしていないときのあなたの心がどこにいるか</b>です。用事も予定もない時間に、心が自然に落ち着く場所。ふだん意識することがなく、自分では「これが普通」だと思っているところです。<br><br>そこが分かると、感情の揺れ方も、時間の感じ方も、リスクの取り方も、なぜそうなるのかが見えてきます。</p>
+    <p class="desc">この診断は性格を測りません。測るのは、<b>あなたにとっての、心の落ち着く場所</b>です。<br><br>
+    用事も予定もない時間に、心が自然に戻っていくところ。言いかえると、<b>何もしていないときに、心に最初に来るもの</b>です。<br>
+    ほっとする人、次を探しはじめる人、少し物足りない人、なんとなく落ち着かない人がいます。この違いは、あなたが思っているよりずっと大きい。<br><br>
+    ここは自分では「これが普通」だと思っているところなので、<b>比べる相手がいないかぎり、一生気づきません。</b>そして、感情の揺れ方も、時間の感じ方も、リスクの取り方も、すべてここから来ています。</p>
     <ul class="rules">
       <li>考え込まず、読んで<b>最初に浮かんだもの</b>を選んでください。正解を探すと結果が濁ります。</li>
       <li>「こうありたい自分」ではなく「実際にそうなっている自分」で答えてください。</li>
-      <li>どの選択肢にも良い・悪いはありません。地形に優劣はありません。</li>
+      <li>どの選択肢にも良い・悪いはありません。心の形に、優れている・劣っているはありません。</li>
       <li id="keyhint">数字キーでも回答できます。</li>
+      <li>これは<b>医学的な診断ではありません</b>。心の傾向を見るものです。</li>
     </ul>
   </div>
+  <div class="card hidden" id="resumebox"></div>
   <button class="btn" onclick="start()">はじめる</button>
   <script>if(matchMedia('(hover:none)').matches)document.getElementById('keyhint').remove();</script>
 </section>
@@ -175,9 +196,11 @@
 <section id="quiz" class="hidden">
   <div class="prog"><i id="progbar"></i></div>
   <div class="count" id="count"></div>
+  <div class="blkname" id="blkname"></div>
   <div class="card">
     <p class="qtext" id="qtext"></p>
     <div id="answers"></div>
+    <p class="creed" id="creed"></p>
     <div class="navrow">
       <button class="back" id="backbtn" onclick="back()">← ひとつ戻る</button>
       <span class="hint" id="hint"></span>
@@ -187,14 +210,16 @@
 
 <!-- ===== RESULT ===== -->
 <section id="result" class="hidden">
-  <h1>あなたの心の形</h1>
+  <h1>あなたの心の落ち着く場所</h1>
   <p class="printonly" style="font-size:11px;color:#666;margin:0 0 20px" id="printstamp"></p>
   <p class="lead" id="stamp"></p>
 
   <div class="card" style="background:#fbfaf6">
     <h2>あ な た の 型</h2>
     <p class="big" id="typename" style="font-size:28px;letter-spacing:.08em"></p>
-    <p class="desc" id="typedesc" style="margin-top:8px"></p>
+    <p class="meta" id="typedepth" style="margin:10px 0 0;line-height:1.8"></p>
+    <p class="desc" id="typedesc" style="margin-top:14px;border-top:1px solid var(--line);padding-top:14px"></p>
+<p class="note" style="margin-top:14px">これは<b>医学的な診断ではありません。</b>心の傾向を見るもので、病気の有無や状態を判定するものではありません。つらさが続いている場合は、専門の窓口にご相談ください。</p>
     <p class="note" id="typenote" style="margin-top:14px"></p>
   </div>
 
@@ -205,7 +230,7 @@
   </div>
 
   <div class="card">
-    <h2>あ な た の 心 の 形</h2>
+    <h2>あ な た は こ う い う 心 を し て い る</h2>
     <div class="prose" id="prose"></div>
   </div>
 
@@ -218,31 +243,26 @@
 
   <div class="card">
     <h2>図 で 見 る</h2>
-    <p class="desc" style="margin:0 0 10px">大きな円があなたの心です。中の点が、ふだん心が落ち着いている場所です。</p>
+    <p class="desc" style="margin:0 0 6px">5つの結果を、1つずつ図にしました。<b>点の位置が、あなたです。</b></p><p class="note" style="margin:0 0 18px">人と見せ合うと、同じ場面の話をしていても点の位置が違います。そこが、話していてすれ違うところです。差が見えるように、位置は少し大げさに描いてあります（順番は変わりません）。</p>
     <div id="disc"></div>
-    <div class="legend" id="disclegend"></div>
+    <p class="note" id="disclegend" style="margin-top:4px"></p>
   </div>
 
-  <div class="card" id="terraincard">
-    <h2>立 体 で 見 る</h2>
-    <p class="desc" style="margin:0 0 16px">同じ内容を、へこみのある地形として立体にしたものです。おまけなので、読み飛ばして構いません。</p>
-    <div id="terrain"></div>
-    <div class="legend" id="legend"></div>
-    <p class="note" id="terrainnote"></p>
-  </div>
-
+  <!-- ここから「その場所について」── ①を中心に置き、②③④⑤をぶら下げる -->
   <div class="card">
-    <h2>ふ だ ん の 心 の 位 置</h2>
-    <p class="desc" style="margin:0 0 16px;color:var(--sub);font-size:13.5px">用事も予定もない、何もしていない時間に、あなたの心が自然に落ち着く場所です。</p>
+    <h2>あ な た の 心 が 落 ち 着 く 場 所</h2>
+    <p class="desc" style="margin:0 0 16px;color:var(--sub);font-size:13.5px">用事も予定もない、何もしていない時間に、あなたの心が自然に戻っていくところです。</p>
     <p class="big" id="baseName"></p>
     <p class="desc" id="baseDesc"></p>
     <p class="meta" id="baseClarity"></p>
   </div>
 
   <div class="card">
-    <h2>く わ し く 見 る</h2>
+    <h2>そ の 場 所 に つ い て 、 4 つ の こ と</h2>
+    <p class="desc" style="margin:0 0 22px;color:var(--sub);font-size:13.5px">上の場所をめぐって、あと4つのことが分かっています。どれも「その場所」の話です。</p>
 
     <div class="row">
+      <p class="subq">その場所へ、どれくらい強く引き戻されるか</p>
       <p class="rowh" id="depthH"></p>
       <div class="gauge"><i id="depthBar"></i></div>
       <div class="ends"><span>まわりに合わせて変わる</span><span>必ず元の自分に戻る</span></div>
@@ -251,19 +271,36 @@
     </div>
 
     <div class="row">
+      <p class="subq">その場所にいるとき、心はどちらを向いているか</p>
       <p class="rowh" id="tiltH"></p>
       <div class="tilt" id="tiltBars"></div>
       <p class="desc" id="tiltDesc"></p>
     </div>
 
     <div class="row">
+      <p class="subq">その場所は、1つか、いくつもあるか</p>
       <p class="rowh" id="peakH"></p>
       <div class="gauge"><i id="peakBar"></i></div>
       <div class="ends"><span>どこでも同じ自分</span><span>場面ごとに別の自分</span></div>
       <p class="meta" id="peakT"></p>
       <p class="desc" id="peakDesc" style="margin-top:12px"></p>
+      <p class="note" style="margin-top:10px">この項目だけ、専用の設問がありません。ほかの4つを答えたあとに出てきたバーで、あなた自身が申告した数字の平均です。直前に5問答えた直後なので、記憶が新しいうちに答えられます。</p>
     </div>
 
+    <div class="row">
+      <p class="subq">その場所が満たされるのは、どんなときか</p>
+      <p class="rowh" id="dirH"></p>
+      <div class="gauge"><i id="dirBar"></i></div>
+      <div class="ends"><span>一人でいるとき</span><span>人と会っているとき</span></div>
+      <p class="meta" id="dirT"></p>
+      <p class="desc" id="dirDesc" style="margin-top:12px"></p>
+    </div>
+  </div>
+
+  <!-- 「実際の割れ具合」は結果ではなく、自分の変化への気づきの話なので枠を分ける -->
+  <div class="card">
+    <h2>自 分 の 変 化 に 、 気 づ い て い る か</h2>
+    <p class="desc" style="margin:0 0 16px;color:var(--sub);font-size:13.5px">上の「1つか、いくつもあるか」はあなたの申告でした。ここでは、実際の答えがどれだけ割れていたかを見ます。この2つのズレが、自分の変化にどれだけ気づいているかを表します。</p>
     <div class="row">
       <p class="rowh" id="scatterH"></p>
       <div class="gauge"><i id="scatterBar"></i></div>
@@ -271,19 +308,23 @@
       <p class="meta" id="scatterSub"></p>
       <p class="desc" id="scatterDesc" style="margin-top:12px"></p>
     </div>
+  </div>
 
-    <div class="row">
-      <p class="rowh" id="dirH"></p>
-      <div class="gauge"><i id="dirBar"></i></div>
-      <div class="ends"><span>一人の時間に生まれる</span><span>人や物事との関わりで生まれる</span></div>
-      <p class="meta" id="dirT"></p>
-      <p class="desc" id="dirDesc" style="margin-top:12px"></p>
+  <div class="card" id="terraincard">
+    <h2>立 体 で 見 る （ お ま け ）</h2>
+    <p class="desc" style="margin:0 0 6px">同じ内容を、へこみのある地面にしたものです。<b>ボールを置くと、へこみの底へ転がって止まります。</b>そこがあなたの心の落ち着く場所です。</p><p class="note" style="margin:0 0 14px">おまけなので、読み飛ばして構いません。ドラッグで回せます。</p>
+    <button class="btn ghost" id="terraintoggle" onclick="toggleTerrain()" style="margin-bottom:16px">立体を表示する</button>
+    <div id="terrainbody" class="hidden">
+      <div id="terrain"></div>
+      <div class="legend" id="legend"></div>
+      <p class="note" id="terrainnote"></p>
     </div>
   </div>
 
   <div class="card">
-    <h2>こ の 形 か ら の 推 定 （ 検 証 用 ）</h2>
-    <p class="note" style="margin:0 0 18px">以下は、ここまでの結果から導いた予測です。当たっているかどうかが、このフレームワーク自体の検証になります。遠慮なく「外れている」を押してください。</p>
+    <h2>こ こ か ら 予 想 で き る こ と</h2>
+    <p class="desc" style="margin:0 0 10px">ここまでの結果<b>だけ</b>を使って、あなたの世界の見え方を4つ予想しました。設問では一度も聞いていないことです。</p>
+    <p class="note" style="margin:0 0 18px">これは<b>2層（世界の見えかた）への橋渡し</b>です。2層では同じことを実際に測るので、この予想が当たっているかどうかを突き合わせられます。当たり外れそのものが、この診断の土台の検証になります。遠慮なく「外れている」を押してください。</p>
     <div id="preds"></div>
   </div>
 
@@ -325,7 +366,18 @@
 
     <div id="sendbox" class="hidden" style="margin-top:26px;padding-top:22px;border-top:1px solid var(--line)">
       <p class="desc" style="margin:0 0 14px">ボタンひとつで送ることもできます。</p>
-      <button class="btn" onclick="sendResult()" id="sendbtn" style="margin-top:18px">結果を送る</button>
+    <div class="consent">
+      <label><input type="checkbox" id="agree" onchange="updSend()">
+        <span>下の内容を読んで、結果を送ることに同意します</span></label>
+      <ul>
+        <li>送られるのは上の枠に出ている内容だけです。氏名・連絡先・メールアドレス・端末の情報は含まれません</li>
+        <li>この診断は心の状態の傾向をたずねるもので、思想や信条は聞いていません。<b>2つめの診断には、やりがいや決まりごとへの考え方など、信条に関わる項目が含まれます</b></li>
+        <li>使いみちは、<b>この診断の精度の検証と改良</b>、および統計としての集計です</li>
+        <li><b>採用選考には使いません。</b>個人が特定できる形で第三者に渡すこともありません</li>
+        <li>送らなくても結果は変わりません。あとから取り消したいときはご連絡ください</li>
+      </ul>
+    </div>
+      <button class="btn" onclick="sendResult()" id="sendbtn" disabled style="margin-top:0">結果を送る</button>
       <p class="meta" id="sendmsg" style="margin-top:10px"></p>
       <p class="note">送られるのは上の枠に出ている内容と、ここで選んだ項目だけです。
       メールアドレスや端末の情報は送られません。送らなくても結果は変わりません。</p>
@@ -344,10 +396,10 @@
   <div class="card" id="nextcard">
     <h2>つぎに進む</h2>
     <p class="desc" style="margin:0 0 14px">ここまでで測ったのは、あなたの心が自然に落ち着く場所そのものでした。
-    <b>第2層</b>では、その形をとおして<b>世界がどう見えているか</b>を測ります。時間、まだ分からないこと、他人との境目、意味、変化、知ること。51項目・約12分です。</p>
+    <b>2層</b>では、その心から<b>世界がどう見えているか</b>を見ていきます。時間、まだ分からないこと、他人との境目、意味、変化、知ること。51項目・約12分です。</p>
     <p class="desc" style="margin:0 0 18px">いまの結果はこの端末に控えてあります。下のボタンから進むと<b>自動で読み込まれ</b>、
-    第0層から予測した世界の見え方と、実際の答えの<b>答え合わせ</b>ができます。これがこの診断の中心にある部分です。</p>
-    <a class="btn" href="../layer2/" style="text-decoration:none;display:inline-block">第2層へ進む →</a>
+    第0＋1層から予測した世界の見え方と、実際の答えの<b>答え合わせ</b>ができます。これがこの診断の中心にある部分です。</p>
+    <a class="btn" href="../layer2/" style="text-decoration:none;display:inline-block">2層へ進む →</a>
     <p class="note" id="handoffmsg" style="margin-top:14px"></p>
   </div>
 
@@ -402,11 +454,11 @@ const Q = [
 
 /* --- 窪みの深さ：揺れた後、元の自分に戻る力 --- */
 {p:"depth",type:"bi",q:"人生で最も動揺した出来事を思い出してください。十分な時間が経った今、あなたは。",
-  a:"完全に元の自分に戻った。あの出来事は過ぎたこととして自分の外にある",
+  a:"もう元の自分に戻っている。あれは過ぎたこととして、片づいている",
   b:"あれ以来、違う自分になった。もう前の自分には戻っていない",rev:true},
 
 {p:"depth",type:"bi",q:"住む場所、付き合う人、仕事。環境が大きく変わったとき、あなた自身は。",
-  a:"環境が変わっても、自分の芯は変わらない",
+  a:"まわりが変わっても、自分そのものは変わらない",
   b:"環境が変われば、自分もかなり変わる",rev:true},
 
 {p:"depth",type:"bi",q:"気分が大きく動いた日の翌朝、目が覚めたときは。",
@@ -464,19 +516,19 @@ const Q = [
   a:"どんなときでも、だいたい同じ答えになる",b:"場面や相手によって、まったく違う答えになる"},
 
 /* --- 求心 / 遠心：満足が生まれる場所 --- */
-{p:"dir",type:"bi",q:"良い経験をしたとき、その経験が自分の中で完成するのは。",
+{p:"dir",type:"bi",q:"良いことがあったとき、それが自分のものになったと感じるのは。",
   a:"あとで一人で振り返ったとき",b:"誰かに話したとき"},
 
 {p:"dir",type:"bi",q:"考えが形になるのは。",
   a:"人と話しているとき",b:"一人で考えているとき",rev:true},
 
 {p:"dir",type:"bi",q:"深く満たされた一日を思い出すと、それは。",
-  a:"一人でいて、内側で何かが進んだ日",b:"人や物事と、深く関わった日"},
+  a:"一人でいて、自分の中で何かが進んだ日",b:"人や物事と、深く関わった日"},
 
 {p:"dir",type:"bi",q:"誰とも関わらない期間が長く続いたとしたら。",
-  a:"自分が薄くなっていく感じがする",b:"むしろ自分が濃くなっていく感じがする",rev:true},
+  a:"自分がだんだん薄れていく感じがする",b:"むしろ自分がはっきりしてくる感じがする",rev:true},
 
-{p:"dir",type:"bi",q:"自分が何者かを確かめようとするとき、手がかりになるのは。",
+{p:"dir",type:"bi",q:"自分がどういう人間かを確かめたいとき、手がかりになるのは。",
   a:"自分が何を感じ、何を考えてきたか",b:"人からどう見られ、何を任されてきたか"},
 
 {p:"dir",type:"bar",q:"ここまでの5問について。相手や場面によって、答えはどれくらい変わりそうですか。",
@@ -499,6 +551,44 @@ const FORM_URL = "";
 const FORM_ID  = "";
 const ENTRY_ID = "";
 
+/* ══════════════════════════════════════════════════════════
+   回答の送り先（Apps Script のウェブアプリ）
+
+   Apps Script で「デプロイ → 新しいデプロイ → ウェブアプリ」を作ると
+   /exec で終わるURLが出る。それをここに貼るだけで、結果画面に
+   送信ボタンが出るようになる。空のままなら送信欄そのものが出ない。
+
+   ※ コードを直したら、そのつどデプロイを「新バージョン」で更新すること。
+      保存しただけでは公開中のURLに反映されない。
+   ══════════════════════════════════════════════════════════ */
+const ENDPOINT = "";
+
+/* ── 回答ID と 人ID ────────────────────────────────────
+   rid … 回答1件ごと。送り直したときに行が増えず、上書きされる
+   pid … 人ごと。この端末に保存し、第2層へ引き継ぐ。
+          これがないと、同じ人の第0＋1層と第2層を結びつけられず、
+          導出仮説の検証を大勢分でできない。
+   名前は聞かない。pid があれば層をまたげる。 */
+function uid(){
+  try{ if(crypto && crypto.randomUUID) return crypto.randomUUID(); }catch(e){}
+  return 'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,10);
+}
+function getPID(){
+  try{
+    let p=localStorage.getItem('kankaku_pid');
+    if(!p){ p=uid(); localStorage.setItem('kankaku_pid',p); }
+    return p;
+  }catch(e){ return uid(); }   /* 保存できない環境では毎回新しくなる。診断は止めない */
+}
+const RID = uid();
+const PID = getPID();
+const DEV = matchMedia('(hover:none)').matches ? 'sp' : 'pc';
+
+/* 設問の上に出す見出し。「話題」だけにして、何を測っているかは出さない。
+   測っている中身を見せると、初動ではなく「そうありたい自分」を答えはじめる。 */
+const BLKNAME={base:'何もしていない時間のこと', depth:'大きく揺れたあとのこと',
+               tilt:'ぼんやりしているときのこと', dir:'満たされるときのこと'};
+const VER = "L0-v2.5";
 const SCALE = ["Aに近い","ややA","ややB","Bに近い"];
 /* ── 偏差値の基準値 ────────────────────────────────────
    実データが集まったら、ここの m（平均）と s（ばらつき）を
@@ -510,24 +600,108 @@ const REF_PROVISIONAL = true;   // 実データで較正したら false にす�
 let idx=0, ans=new Array(Q.length).fill(null), t0=0, times=[], tPrev=0;
 const TOUCH = matchMedia('(hover:none)').matches;
 
+/* ============================================================
+   途中保存 ── 回答のたびに、この端末の中だけに控える
+
+   24時間で期限切れにしている。この診断は「最初に浮かんだもの」を
+   測っているので、日をまたいで再開すると、そのときの気分が混ざる。
+   再開した回答には印を付けて送り、あとで分けて集計できるようにする。
+   保存できない環境（プライベートブラウズ等）では黙って諦める。
+   ============================================================ */
+const WIPKEY='kankaku_L0_wip', WIP_TTL=24*60*60*1000;
+let resumed=0, sessions=1;
+
+function saveWip(){
+  try{ localStorage.setItem(WIPKEY, JSON.stringify(
+    {v:VER, at:Date.now(), idx:idx, ans:ans, times:times, el:Date.now()-t0, ses:sessions})); }catch(e){}
+}
+function clearWip(){ try{ localStorage.removeItem(WIPKEY); }catch(e){} }
+function loadWip(){
+  try{
+    const raw=localStorage.getItem(WIPKEY); if(!raw) return null;
+    const w=JSON.parse(raw);
+    if(w.v!==VER) return null;                      /* 版が違えば使わない */
+    if(Date.now()-w.at > WIP_TTL){ clearWip(); return null; }
+    if(!w.ans || w.ans.length!==Q.length || !w.idx) return null;
+    return w;
+  }catch(e){ return null; }
+}
+function showResume(){
+  const w=loadWip(); if(!w) return;
+  const box=document.getElementById('resumebox'); if(!box) return;
+  const h=Math.round((Date.now()-w.at)/3600000);
+  box.innerHTML='<p class="desc" style="margin:0 0 4px"><b>前回の続きが残っています。</b></p>'+
+    '<p class="desc" style="margin:0 0 16px;font-size:14.5px">'+w.idx+' / '+Q.length+'問目まで答えてありました'+
+    (h>=1?'（'+h+'時間前）':'（さきほど）')+'。</p>'+
+    '<button class="btn" onclick="resume()">続きから</button>'+
+    '<button class="btn ghost" onclick="restart()" style="margin-left:10px">最初から</button>'+
+    '<p class="note">控えはこの端末の中だけに置かれます。24時間で消えます。<br>'+
+    '日をまたぐと、そのときの気分が混ざるので、時間が経っていれば最初からをおすすめします。</p>';
+  box.classList.remove('hidden');
+}
+function resume(){
+  const w=loadWip(); if(!w) return start();
+  idx=w.idx; ans=w.ans; times=w.times||[];
+  sessions=(w.ses||1)+1; resumed=1;
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('quiz').classList.remove('hidden');
+  t0=Date.now()-(w.el||0); tPrev=Date.now();
+  render();
+}
+function restart(){
+  clearWip();
+  const b=document.getElementById('resumebox'); if(b) b.classList.add('hidden');
+}
+
 function start(){ t0=Date.now(); tPrev=t0; document.getElementById('intro').classList.add('hidden');
   document.getElementById('quiz').classList.remove('hidden'); render(); }
+
+/* ── バーの前に、直前の設問と自分の答えを並べる ──
+   バーが専用5問より精度が高い（相関0.76〜0.90 対 0.68）根拠は、
+   「直前に答えた直後で記憶が新しいこと」だった。
+   ところが実際には5問前は思い出せない。ここを見せて、根拠を成立させる。 */
+function BLK0OF(q){ return q.p; }
+function cut(t,n){ t=String(t); return t.length>n ? t.slice(0,n)+'…' : t; }
+function answerLabel(q,a){
+  if(a===null||a===undefined) return '—';
+  if(q.type==='bi'){ const side=a<=1?q.a:q.b; return SCALE[a]+'　'+cut(side,20); }
+  return cut(q.o[a].t,22);
+}
+function recallHTML(q){
+  const mine=[];
+  for(let i=idx-1;i>=0;i--){
+    const p=Q[i];
+    if(p.type==='bar') break;
+    if(BLK0OF(p)!==BLK0OF(q)) break;
+    mine.unshift([i,p]);
+  }
+  if(!mine.length) return '';
+  let h='<div class="recall"><p class="h">ここまでの'+mine.length+'問と、あなたの答え</p>';
+  mine.forEach(([i,p])=>{
+    h+='<div>'+cut(p.q,24)+'　<b>→ '+answerLabel(p,ans[i])+'</b></div>';
+  });
+  return h+'</div>';
+}
 
 function render(){
   const q=Q[idx];
   document.getElementById('progbar').style.width=(idx/Q.length*100)+'%';
-  document.getElementById('count').textContent=String(idx+1).padStart(2,'0')+' / '+Q.length;
+  document.getElementById('count').textContent=String(idx+1).padStart(2,'0')+' / '+Q.length+'　　あと'+(Q.length-idx-1)+'問';
+  document.getElementById('blkname').textContent=BLKNAME[Q[idx].p]||'';
   document.getElementById('qtext').textContent=q.q;
   document.getElementById('backbtn').style.visibility = idx===0?'hidden':'visible';
   const box=document.getElementById('answers'); box.innerHTML='';
+  document.getElementById('creed').innerHTML='考え込まず、<b>最初に浮かんだほう</b>を選んでください。正解を探すと結果が濁ります';
 
   if(q.type==='bar'){
     document.getElementById('hint').textContent='';
+    document.getElementById('creed').innerHTML='さきほどの答えを見ながらで構いません。<b>思い出せる範囲</b>で、感覚で決めてください';
     const w=document.createElement('div'); w.className='barwrap';
     w.innerHTML='<div class="barends"><span>'+q.a+'</span><span style="text-align:right">'+q.b+'</span></div>'+
       '<input type="range" min="0" max="100" step="5" value="50" id="bar">'+
       '<div class="barval" id="barval">バーを動かしてください</div>';
     box.appendChild(w);
+    const rc=document.createElement('div'); rc.innerHTML=recallHTML(q); box.appendChild(rc);
     const btn=document.createElement('button'); btn.className='btn'; btn.textContent='次へ';
     btn.style.cssText='margin-top:18px;opacity:.35;pointer-events:none'; box.appendChild(btn);
     const r=document.getElementById('bar'), lab=document.getElementById('barval');
@@ -559,7 +733,7 @@ function render(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function choose(i){ ans[idx]=i; const n=Date.now(); times[idx]=n-tPrev; tPrev=n; idx++; if(idx>=Q.length){ finish(); } else { render(); } }
+function choose(i){ ans[idx]=i; const n=Date.now(); times[idx]=n-tPrev; tPrev=n; idx++; if(idx>=Q.length){ clearWip(); finish(); } else { saveWip(); render(); } }
 function back(){ if(idx>0){ idx--; render(); } }
 
 document.addEventListener('keydown',e=>{
@@ -652,14 +826,14 @@ function score(){
 
 const QUAD = {
   '快静':{n:'安らぎ', c:'var(--q2)', d:'何もしていない時間が、そのまま心地よい。予定がなくても心が減らないので、焦って何かで埋める必要がありません。世界を基本的に安全な場所として見ています。裏返せば、危ないことの兆しに気づくのが少し遅れます。'},
-  '快動':{n:'期待', c:'var(--q1)', d:'何もしていない時間が、これから何かが始まる余白に見えます。空白が可能性に見えるので、動き出すことに抵抗がありません。裏返せば、何も起きない時間をそのまま味わうのが難しく、いつも次を探してしまいます。'},
-  '不快動':{n:'緊張', c:'var(--q3)', d:'何もしていない時間が、まだ手をつけていない何かがある合図に見えます。この位置の人は、危ないことや足りていないことがよく見えます。それは弱さではなく、見えている情報が多いということです。ただし本人はこれを自分の性格ではなく「世界とはそういうもの」だと思っていることが多いです。'},
-  '不快静':{n:'空虚', c:'var(--q4)', d:'何もしていない時間に、薄い物足りなさが残ります。うまくいっているときでさえ、どこか足りない感じがする。静かなので本人も見落としやすく、「やる気がない」「冷めている」と自分を評価しがちですが、心の落ち着き先の位置の問題です。'},
+  '快動':{n:'期待', c:'var(--q1)', d:'何もしていない時間が、これから何かが始まる前の時間に見えます。空いた時間が「まだ何でもできる」に見えるので、動き出すことに抵抗がありません。裏返せば、何も起きない時間をそのまま味わうのが難しく、いつも次を探してしまいます。'},
+  '不快動':{n:'気がかり', c:'var(--q3)', d:'何もしていない時間が、まだ手をつけていない何かがある合図に見えます。この位置の人は、危ないことや足りていないことがよく見えます。それは弱さではなく、見えている情報が多いということです。ただし本人はこれを自分の性格ではなく「世界とはそういうもの」だと思っていることが多いです。'},
+  '不快静':{n:'渇き', c:'var(--q4)', d:'何もしていない時間に、薄い物足りなさが残ります。うまくいっているときでさえ、どこか足りない感じがする。静かなので本人も見落としやすく、「やる気がない」「冷めている」と自分を評価しがちですが、心の落ち着く場所が、そこにあるというだけです。'},
   '中庸':{n:'中庸', c:'var(--q0)', d:'どちらにも強く寄っていません。穏やかで、外の出来事に不必要に振り回されにくい。一方で、内側から湧き上がる強い動機も生まれにくく、「何をしたいのか分からない」という形で出ることがあります。'}
 };
 
-const TILTNAME={past:'過去のこと',future:'これからのこと',inner:'自分のこと',outer:'外のこと',stay:'何も考えない'};
-const BARNAME ={past:'過去',    future:'これから',    inner:'自分',    outer:'外',    stay:'何も'};
+const TILTNAME={past:'過去のこと',future:'これからのこと',inner:'自分のこと',outer:'まわりのこと',stay:'何も考えない'};
+const BARNAME ={past:'過去',    future:'これから',    inner:'自分',    outer:'まわり',    stay:'何も'};
 const TILTDESC={
   past:'何もしていない時間に、考えは自分の過去の出来事へ向かいます。振り返りは学びにもなれば、後悔にもなります。「過去にとらわれている」と感じることもあれば、「積み重ねがある」という強みになることもあります。',
   future:'何もしていない時間に、考えはこれから起きることへ向かいます。まだ起きていないことを先に引き受けるので備えは厚くなりますが、そのぶん「いま目の前にあること」が薄くなりがちです。',
@@ -742,7 +916,7 @@ function finish(){
       .map(x=>{const k=x.split(':')[0];return x.split(':')[1]+' '+S.vary[k]+'％';}).join('　／　')+'</p>');
   document.getElementById('peakBar').style.width=S.peak+'%';
   document.getElementById('peakDesc').textContent =
-    S.peak>=60 ? '場面ごとに、別の落ち着き先を持っています。いくつもの世界を行き来でき、どこでもやっていけます。「本当の自分が分からない」と悩みやすいですが、これは一貫性がないのではなく、心の形がそうなっているということです。（心の病とは別の話です）'
+    S.peak>=60 ? '場面ごとに、別の落ち着き先を持っています。いくつもの世界を行き来でき、どこでもやっていけます。「本当の自分が分からない」と悩みやすいですが、これは自分がぶれているのではなく、心の形がそうなっているということです。（心の病とは別の話です）'
     : S.peak<40 ? 'どの場面でも同じ自分です。まわりから見て分かりやすく、信頼されやすい。一方で、合わせることを求められる場面ではぶつかりやすく、合わない環境にいるときのダメージが大きくなります。'
     : '場面によって多少変わりますが、根っこは同じです。切り替えていることを自分で分かっていれば、強みとして使えます。';
 
@@ -762,7 +936,7 @@ function finish(){
 
   /* 求心遠心 */
   const rW = S.dir>=66?'人との関わりから':S.dir>=34?'どちらからも':'一人の時間から';
-  document.getElementById('dirH').textContent='満足が生まれる場所 ： '+rW+'　'+S.dir+'％';
+  document.getElementById('dirH').textContent='元気が戻るのは ： '+rW+'　'+S.dir+'％';
   document.getElementById('dirBar').style.width=S.dir+'%';
   document.getElementById('dirDesc').textContent =
     S.dir>=66 ? '満足は、人や物事と関わったときに生まれます。経験は誰かに話すか実際に使ってみるまで、自分の中で終わりません。人づきあいが好きかどうかとは別の話で、一人の時間が好きな人にもこの型はいます。'
@@ -774,7 +948,7 @@ function finish(){
   buildProse();
   buildHits();
   drawDisc(Qd);
-  drawTerrain(Qd);
+  window._Qd=Qd;   /* 立体は開いたときに描く */
   buildPreds();
   buildOverall();
   if(FORM_URL){
@@ -786,7 +960,7 @@ function finish(){
     const l=document.getElementById('formlink');
     if(l) l.parentElement.style.display='none';
   }
-  if(FORM_ID && ENTRY_ID) document.getElementById('sendbox').classList.remove('hidden');
+  if(ENDPOINT) document.getElementById('sendbox').classList.remove('hidden');
   refreshExport();
   ['freetext','attrAge','attrSex','attrName'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.addEventListener('input',refreshExport); });
@@ -805,9 +979,9 @@ function handoff(){
   try{
     localStorage.setItem('kankaku_L0', payload());
     if(msg) msg.textContent='※ 控えはこの端末の中だけに保存されます。どこにも送られません。'+
-      '別の端末で第2層を受けるときは、上の回答データをコピーして持っていってください。';
+      '別の端末で2層を受けるときは、上の回答データをコピーして持っていってください。';
   }catch(e){
-    if(msg) msg.textContent='※ この端末では控えを保存できませんでした。第2層に進んだら、'+
+    if(msg) msg.textContent='※ この端末では控えを保存できませんでした。2層に進んだら、'+
       '上の回答データをコピーして貼り付けてください。';
   }
 }
@@ -821,92 +995,110 @@ function handoff(){
      矢印         ＝ 満足が生まれる場所
    ============================================================ */
 function drawDisc(Qd){
-  const W=560,H=516,cx=280,cy=248,R1=168,R0=128;
+  /* 1枚に全部を詰め込むと、どこを見ればよいのか分からなくなる。
+     指標ごとに1枚ずつ、同じ形のものさしで描く。
+     人と見せ合ったときに、どこが違うのかを指させることが目的。 */
   const col=getComputedStyle(document.documentElement)
               .getPropertyValue(Qd.c.replace('var(','').replace(')','')).trim()||'#5b8c7b';
-  const rad=a=>a*Math.PI/180, P=(a,r)=>[cx+r*Math.cos(rad(a)), cy+r*Math.sin(rad(a))];
-  function sector(a0,a1){ const [x0,y0]=P(a0,R0),[x1,y1]=P(a1,R0),[x2,y2]=P(a1,R1),[x3,y3]=P(a0,R1);
-    return `M${x0} ${y0} A${R0} ${R0} 0 0 1 ${x1} ${y1} L${x2} ${y2} A${R1} ${R1} 0 0 0 ${x3} ${y3} Z`; }
+  const LINE='#ddd7cd', SUB='#a09889', INK='#22201d';
 
-  /* 外側リング：4方向。濃さは5問中の得票数 */
-  const DIR=[['future',-135,-45,'これからのこと',cx,cy-R1-18,'middle'],
-             ['outer',  -45, 45,'外のこと',      cx+R1+16,cy+5,'start'],
-             ['past',    45,135,'過去のこと',    cx,cy+R1+30,'middle'],
-             ['inner',  135,225,'自分のこと',    cx-R1-16,cy+5,'end']];
-  let ring='';
-  DIR.forEach(([k,a0,a1,lab,lx,ly,anc])=>{
-    const n=S.tilt[k]||0, on=(S.tiltMain===k);
-    ring+=`<path d="${sector(a0,a1)}" fill="${col}" fill-opacity="${(n/5*0.5).toFixed(2)}"
-            stroke="#ddd7cd" stroke-width="1"/>`;
-    ring+=`<text x="${lx}" y="${ly}" font-size="15" text-anchor="${anc}"
-            fill="${on?col:'#a09889'}" font-weight="${on?'600':'400'}">${lab}</text>`;
-    if(n>0) { const [tx,ty]=P((a0+a1)/2,(R0+R1)/2);
-      ring+=`<text x="${tx}" y="${ty+5}" font-size="13" text-anchor="middle"
-              fill="${on?'#fff':'#8a8378'}" font-weight="${on?'600':'400'}">${n}</text>`; }
-  });
+  /* 中央付近に固まって見えないよう、位置を誇張する。
+     大小関係は変えない（単調な変換）。他人と比べたときの差を見せるため。 */
+  const boost=v=>Math.sign(v)*Math.pow(Math.abs(v)/100,0.62);
 
-  /* どの方向にも向かわない場合 */
-  const nStay=S.tilt.stay||0, onStay=(S.tiltMain==='stay');
-  if(nStay>0) ring+=`<text x="52" y="104" font-size="15" fill="${onStay?col:'#a09889'}"
-     font-weight="${onStay?'600':'400'}">何も考えない ${nStay}</text>`;
-
-  /* 内側：心地よさ（横）× 動きやすさ（縦） */
-  const IR=R0-14;
-  let inner=`<circle cx="${cx}" cy="${cy}" r="${R0}" fill="#fffdfa" stroke="#ddd7cd"/>
-    <line x1="${cx-IR}" y1="${cy}" x2="${cx+IR}" y2="${cy}" stroke="#e8e2d8" stroke-dasharray="3 4"/>
-    <line x1="${cx}" y1="${cy-IR}" x2="${cx}" y2="${cy+IR}" stroke="#e8e2d8" stroke-dasharray="3 4"/>
-    <g font-size="12" fill="#a09889" stroke="#fffdfa" stroke-width="3.5" style="paint-order:stroke">
-    <text x="${cx-IR+4}" y="${cy-8}">落ち着かない</text>
-    <text x="${cx+IR-4}" y="${cy-8}" text-anchor="end">心地よい</text>
-    <text x="${cx+5}" y="${cy-IR+14}">動きやすい</text>
-    <text x="${cx+5}" y="${cy+IR-6}">静か</text></g>`;
-
-  /* 点（落ち着き先）と、その周りの輪 */
-  const px=cx+(S.valence/100)*IR*0.55, py=cy-(S.arousal/100)*IR*0.55;
-  const ringR = 20 + (100-S.depth)/100*36;
-  const two = S.peak>=60;
-  const pts = two ? [[px-26,py+14],[px+26,py-14]] : [[px,py]];
-  let dots='';
-  pts.forEach(([x,y])=>{
-    dots+=`<circle cx="${x}" cy="${y}" r="${ringR}" fill="${col}" fill-opacity=".10"
-             stroke="${col}" stroke-opacity=".45" stroke-dasharray="4 4"/>`;
-    dots+=`<circle cx="${x}" cy="${y}" r="8" fill="${col}"/>`;
-  });
-
-  /* 満足が生まれる場所：内向き／外向きの矢印 */
-  let arr='';
-  const centrip=S.dir<40, centri=S.dir>=60;
-  if(centrip||centri){
-    [0,90,180,270].forEach(a=>{
-      const r1=ringR+34, r2=ringR+12;
-      const [ax,ay]=P(a,centrip?r1:r2), [bx,by]=P(a,centrip?r2:r1);
-      const dx=pts[0][0]-cx, dy=pts[0][1]-cy;
-      arr+=`<line x1="${ax+dx}" y1="${ay+dy}" x2="${bx+dx}" y2="${by+dy}"
-              stroke="${col}" stroke-opacity=".55" stroke-width="1.5" marker-end="url(#ah2)"/>`;
-    });
-  }
-
-  document.getElementById('disc').innerHTML=`
-  <svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;max-width:520px;margin:0 auto">
-    <defs><marker id="ah2" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
-      <path d="M0,0 L7,3.5 L0,7 z" fill="${col}" fill-opacity=".55"/></marker></defs>
-    ${ring}${inner}${arr}${dots}
+  /* ── ① ふだんの心：四象限マップ ── */
+  const W=460,H=430,cx=230,cy=205,RX=168,RY=150;
+  const px=cx+boost(S.valence)*RX, py=cy-boost(S.arousal)*RY;
+  const quad=[['期待',cx+RX-6,cy-RY+16,'end'],['気がかり',cx-RX+6,cy-RY+16,'start'],
+              ['安らぎ',cx+RX-6,cy+RY-6,'end'],['渇き',cx-RX+6,cy+RY-6,'start']];
+  let q1=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;max-width:460px;margin:0 auto">
+    <rect x="${cx-RX}" y="${cy-RY}" width="${RX*2}" height="${RY*2}" fill="#fffdfa" stroke="${LINE}"/>
+    <line x1="${cx-RX}" y1="${cy}" x2="${cx+RX}" y2="${cy}" stroke="${LINE}"/>
+    <line x1="${cx}" y1="${cy-RY}" x2="${cx}" y2="${cy+RY}" stroke="${LINE}"/>
+    <g font-size="15" fill="${SUB}">`;
+  quad.forEach(([t,x,y,a])=>{ q1+=`<text x="${x}" y="${y}" text-anchor="${a}"
+      fill="${Qd.n===t?col:'#c9c2b6'}" font-weight="${Qd.n===t?'600':'400'}">${t}</text>`; });
+  q1+=`</g><g font-size="12.5" fill="${SUB}">
+    <text x="${cx}" y="${cy-RY-10}" text-anchor="middle">動いている</text>
+    <text x="${cx}" y="${cy+RY+22}" text-anchor="middle">静か</text>
+    <text x="${cx-RX}" y="${cy+RY+22}" text-anchor="start">心地よくない</text>
+    <text x="${cx+RX}" y="${cy+RY+22}" text-anchor="end">心地よい</text></g>
+    <circle cx="${px}" cy="${py}" r="26" fill="${col}" fill-opacity=".13"/>
+    <circle cx="${px}" cy="${py}" r="9" fill="${col}"/>
+    <text x="${px}" y="${py-34}" text-anchor="middle" font-size="14" fill="${col}"
+      font-weight="600" stroke="#fffdfa" stroke-width="4" style="paint-order:stroke">あなた</text>
+    <text x="${cx}" y="${H-6}" text-anchor="middle" font-size="12" fill="${SUB}">5問のうち ${S.maxQ}問が ${Qd.n} の方向でした</text>
   </svg>`;
 
-  const T=TILTNAME[S.tiltMain];
-  document.getElementById('disclegend').innerHTML=[
-    '外側の濃い部分 ＝ 考えが向かう先（'+T+'）',
-    '点の位置 ＝ ふだんの心（'+Qd.n+'）',
-    '点をかこむ輪 ＝ '+(S.depth>=66?'小さい：必ず元に戻る':S.depth<34?'大きい：まわりに合わせて動く':'中くらい'),
-    '点の数 ＝ 落ち着く場所（'+(two?'2つ':'1つ')+'）',
-    (centrip?'矢印が内向き ＝ 満足は一人の時間から':centri?'矢印が外向き ＝ 満足は人との関わりから':'矢印なし ＝ どちらからも')
-  ].map(x=>'<div>'+x+'</div>').join('');
+  /* ── ② 考えが向かう先：5本の棒 ── */
+  const DIRS=[['past','過去のこと'],['future','これからのこと'],['inner','自分のこと'],
+              ['outer','まわりのこと'],['stay','何も考えない']];
+  const BW=460, BX=126, BR=300;
+  let q2=`<svg viewBox="0 0 ${BW} ${DIRS.length*44+16}" width="100%" style="display:block;max-width:460px;margin:0 auto">`;
+  DIRS.forEach(([k,lab],i)=>{
+    const n=S.tilt[k]||0, on=(S.tiltMain===k), y=i*44+26;
+    q2+=`<text x="${BX-12}" y="${y+5}" text-anchor="end" font-size="14"
+      fill="${on?INK:SUB}" font-weight="${on?'600':'400'}">${lab}</text>
+      <rect x="${BX}" y="${y-9}" width="${BR}" height="18" fill="#f1ede5" rx="2"/>
+      <rect x="${BX}" y="${y-9}" width="${(n/5*BR).toFixed(1)}" height="18" rx="2"
+        fill="${on?col:'#cfc8ba'}"/>
+      <text x="${BX+BR+12}" y="${y+5}" font-size="13" fill="${on?col:SUB}"
+        font-weight="${on?'600':'400'}">${n}問</text>`;
+  });
+  q2+=`</svg>`;
+
+  /* ── ③〜⑤ 3つのものさし。同じ形なので、並べて比べられる ── */
+  function scale(title,val,loLab,hiLab,note){
+    const w=460,h=104,x0=64,x1=396,y=52;
+    const mx=x0+(val/100)*(x1-x0);
+    return `<svg viewBox="0 0 ${w} ${h}" width="100%" style="display:block;max-width:460px;margin:0 auto">
+      <text x="${w/2}" y="18" text-anchor="middle" font-size="13.5" fill="${INK}">${title}</text>
+      <line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="#f1ede5" stroke-width="8" stroke-linecap="round"/>
+      <line x1="${(x0+x1)/2}" y1="${y-11}" x2="${(x0+x1)/2}" y2="${y+11}" stroke="${LINE}"/>
+      <circle cx="${mx}" cy="${y}" r="10" fill="${col}"/>
+      <text x="${mx}" y="${y-19}" text-anchor="middle" font-size="12.5" fill="${col}" font-weight="600"
+        stroke="#fffdfa" stroke-width="4" style="paint-order:stroke">${val}％</text>
+      <text x="${x0-6}" y="${y+6}" text-anchor="end" font-size="11.5" fill="${SUB}">◀</text>
+      <text x="${x1+6}" y="${y+6}" font-size="11.5" fill="${SUB}">▶</text>
+      <text x="${x0}" y="${y+30}" font-size="12" fill="${SUB}">${loLab}</text>
+      <text x="${x1}" y="${y+30}" text-anchor="end" font-size="12" fill="${SUB}">${hiLab}</text>
+      <text x="${w/2}" y="${y+50}" text-anchor="middle" font-size="12" fill="${SUB}">${note}</text>
+    </svg>`;
+  }
+  const side=(v,lo,hi)=> v>=60?('はっきり'+hi+'側'):v>=50?('やや'+hi+'側'):v>=40?('やや'+lo+'側'):('はっきり'+lo+'側');
+
+  const q3=scale('その場所へ、どれくらい強く引き戻されるか',S.depth,
+    'まわりに合わせて変わる','必ず元の自分に戻る',side(S.depth,'まわりに合わせる','元に戻る'));
+  const q4=scale('その場所は、1つか、いくつもあるか',S.peak,
+    'どこでも同じ自分','場面ごとに別の自分',side(S.peak,'どこでも同じ','場面ごと'));
+  const q5=scale('元気が戻るのは、どんなとき',S.dir,
+    '一人でいるとき','人と会っているとき',side(S.dir,'一人','人と会う'));
+
+  const box=(t,body)=>`<div style="margin:0 0 26px">
+    <p style="font-size:12px;letter-spacing:.14em;color:${SUB};margin:0 0 12px">${t}</p>${body}</div>`;
+
+  document.getElementById('disc').innerHTML=
+    box('① 心が落ち着く場所',q1)+
+    box('② そこにいるとき、考えが向かう先',q2)+
+    box('③ 3つのものさし',q3+q5+q4);
+
+  document.getElementById('disclegend').innerHTML=
+    '① 右へいくほど心地よく、上へいくほど動いています。四隅の名前が、その場所の呼び名です。<br>'+
+    '② 5問のうち何問がその方向を向いたかを、棒の長さにしています。<br>'+
+    '③ まん中の線が中央です。左右どちらに、どれくらい寄っているかだけを見てください。';
 }
 
 /* ============================================================
    地形の描画 ── 3D（Three.js）。読み込めない場合は2D断面図に戻る
    ============================================================ */
 let _raf=null;
+function toggleTerrain(){
+  const b=document.getElementById('terrainbody'), t=document.getElementById('terraintoggle');
+  const open=b.classList.contains('hidden');
+  b.classList.toggle('hidden');
+  t.textContent = open ? '立体を隠す' : '立体を表示する';
+  if(open && !b.dataset.drawn){ b.dataset.drawn='1'; try{ drawTerrain(window._Qd); }catch(e){} }
+}
 function drawTerrain(Qd){
   if(window.THREE){ try{ draw3D(Qd); return; }catch(e){ console.warn('3D失敗、2Dに切替',e); } }
   document.getElementById('terrain').style.height='auto';
@@ -933,7 +1125,11 @@ function draw3D(Qd){
                      : [{x:0,z:0,w:1.5,a:amp}];
   const tv=DIRVEC[S.tiltMain]||[0,0], TG=0.28;
   const y0 = valY + amp;
-  const hAt=(x,z)=>{ let y=y0 + TG*(tv[0]*x + tv[1]*z);
+  /* 傾きの符号 ── 考えが向かう先が「低いほう」になる。
+     ボールを置けば、その方向へ転がっていく。
+     以前は符号が逆で、向かう先が高くなっていた（考えが上り坂の先にある形）。
+     ラベルの位置は 過去=-x / これから=+x / 自分=+z / まわり=-z。 */
+  const hAt=(x,z)=>{ let y=y0 - TG*(tv[0]*x + tv[1]*z);
     basins.forEach(b=>{ y -= b.a*Math.exp(-((x-b.x)**2+(z-b.z)**2)/(2*b.w*b.w)); });
     return (y + rip*Math.sin(x*4.6)*Math.cos(z*4.6)) * YS; };
 
@@ -996,7 +1192,7 @@ function draw3D(Qd){
   }
   const M=S.tiltMain;
   label('過去のこと',-4.9,0,M!=='past'); label('これからのこと',4.9,0,M!=='future');
-  label('自分のこと',0,4.9,M!=='inner');  label('外のこと',0,-4.9,M!=='outer');
+  label('自分のこと',0,4.9,M!=='inner');  label('まわりのこと',0,-4.9,M!=='outer');
 
   /* --- 視点操作 --- */
   /* 地形の高さの範囲を実測し、傾斜の向きに関わらず画面に収まるよう寄りを決める */
@@ -1045,14 +1241,16 @@ function draw3D(Qd){
   /* --- 凡例と説明 --- */
   const T=TILTNAME[M];
   document.getElementById('legend').innerHTML=
-    ['窪みの底の高さ ＝ ふだんの心の位置','窪みの深さ ＝ 揺れたあと元に戻る力',
-     '地形の傾き ＝ 考えが向かう先（'+T+'）','窪みの数 ＝ 落ち着く場所の数（'+(two?'2つ':'1つ')+'）',
-     '表面のざらつき ＝ 心の動きやすさ',
+    ['<b>へこみ</b>　ボールが転がって止まるところ。あなたの心が落ち着く場所です',
+     '<b>へこみの深さ</b>　深いほど、大きく揺れても必ず元に戻ります',
+     '<b>地面のかたむき</b>　低いほうへ考えが流れます。いまは《'+T+'》のほうへ下っています',
+     '<b>へこみの数</b>　落ち着く場所の数です（'+(two?'場面ごとに2つ':'どこでも1つ')+'）',
+     '<b>表面のざらつき</b>　心の動きやすさです',
      '粒の動き ＝ '+(centrip?'満足は一人の時間から（内へ集まる）':centri?'満足は人との関わりから（外へ流れる）':'どちらからも（表示なし）')]
     .map(x=>'<div>'+x+'</div>').join('');
   document.getElementById('terrainnote').textContent=
-    '細い四角の枠は、心地よさの境目です。窪みの底がこの枠より下にあれば、ふだんの心はわずかに落ち着かない側に、上にあれば心地よい側にあります。'+
-    '良し悪しではなく、位置の違いです。あなたの心はこの窪みの底に落ち着いていて、'+
+    '細い四角の枠は、心地よさの境目です。くぼみの底がこの枠より下にあれば、ふだんの心はわずかに落ち着かない側に、上にあれば心地よい側にあります。'+
+    '良し悪しではなく、位置の違いです。あなたの心はこのくぼみの底に落ち着いていて、'+
     'そのときの感情の強さは、底からどれだけ離れたかで決まります。'+
     (M==='stay'?'傾きがないので、何もしていない時間に心がどこかへ流れていくことがありません。'
      :'何もしていない時間、心はこの傾きに沿って'+T+'の方へ転がります。');
@@ -1112,14 +1310,14 @@ function draw2DTerrain(Qd){
     </circle>
     <text x="${bx}" y="${by-20}" font-size="11" fill="${Qd.c}" text-anchor="middle" letter-spacing="1">${Qd.n}</text>
 
-    <text x="${W-12}" y="${top+22}" font-size="11" fill="#a09889" text-anchor="end" letter-spacing="1">傾斜 → ${tiltLabel}</text>
+    <text x="${W-12}" y="${top+22}" font-size="11" fill="#a09889" text-anchor="end" letter-spacing="1">考えの向き → ${tiltLabel}</text>
     <text x="12" y="26" font-size="10.5" fill="#a09889" letter-spacing="1">心地よい</text>
     <text x="12" y="${H-12}" font-size="10.5" fill="#a09889" letter-spacing="1">落ち着かない</text>
   </svg>`;
   document.getElementById('terrain').innerHTML=svg;
   document.getElementById('legend').innerHTML='';
   document.getElementById('terrainnote').textContent =
-    '窪みの底の高さがふだんの心の位置、窪みの深さが元に戻る力、窪みの数が落ち着く場所の数を表します。そのときの感情の強さは、この底からどれだけ離れたかで決まります。';
+    'くぼみの底の高さが心の落ち着く場所、くぼみの深さが元に戻る力、くぼみの数が落ち着く場所の数を表します。そのときの感情の強さは、この底からどれだけ離れたかで決まります。';
 }
 
 /* ============================================================
@@ -1127,37 +1325,44 @@ function draw2DTerrain(Qd){
    どちらも元からカテゴリなので、境界付近で受け直しても型が変わらない。
    連続量（戻る力・場面・満足）は型に入れず、同じ型の中の個人差として示す。
    ============================================================ */
-const TILT_TYPE={past:'回想',future:'先取り',inner:'内観',outer:'見わたし',stay:'没入'};
+const TILT_TYPE={past:'過去',future:'これから',inner:'自分',outer:'まわり',stay:'目の前'};
 const TYPE_DESC={
- '安らぎ回想':'満ちた心のまま来し方を眺めます。悔いより懐かしさが先に来るので、過ぎたことを味わえます。',
- '安らぎ先取り':'穏やかなまま先を見ます。未来が不安ではなく楽しみとして来る、めずらしい組み合わせです。',
- '安らぎ内観':'静かな水面に自分を映すように、自分を責めずに眺められます。自己理解が最も進みやすい型です。',
- '安らぎ見わたし':'満ちた心のまま外を見るので、世界が面白いものとして目に入ります。危ない兆しには気づきにくい。',
- '安らぎ没入':'どこへも流れず、目の前のものに入り込みます。「いまを生きている」に最も近い状態です。',
- '期待回想':'過去を「次に使えるもの」として思い出します。経験が資産として積み上がっていきます。',
- '期待先取り':'つねに次を探しています。動き出しが速い一方、何も起きない時間に耐えられません。',
- '期待内観':'「自分はどこまでいけるか」を点検しています。成長そのものへの関心が高い型です。',
- '期待見わたし':'外に面白いものを探しに出ます。情報にも機会にも敏感で、行動範囲が広がります。',
- '期待没入':'動きたいのに、目の前のものに没頭して止まります。集中力の高さが武器になります。',
- '緊張回想':'済んだことを何度も点検します。後悔になりやすい反面、同じ失敗を繰り返しません。',
- '緊張先取り':'起きうる問題を先に引き受けます。備えは誰よりも厚く、そのぶん「いま」が薄くなります。',
- '緊張内観':'自分の状態をつねに点検します。不調に早く気づけますが、考えすぎて動けなくなることも。',
- '緊張見わたし':'外の変化や危険を察知します。場の空気を読む力が高く、周囲から頼られやすい型です。',
- '緊張没入':'張りつめたまま目の前のものに没入します。没頭が休息の代わりになっている可能性があります。',
- '空虚回想':'「昔のほうが良かった」という形で過去を見ます。喪失の感覚が中心にあります。',
- '空虚先取り':'「いつか満たされるかもしれない」という形で先を見ます。求め続ける力が強い型です。',
- '空虚内観':'「何が足りないのか」を探し続けます。答えの出にくい問いを抱え続けます。',
- '空虚見わたし':'外に埋めるものを探します。刺激はよく入りますが、手元に残りにくい。',
- '空虚没入':'何も浮かばないまま、そこにいます。最も自覚しにくく、本人も気づいていないことが多い型です。'
+ '安らぎ過去':'満ちた心のまま来し方を眺めます。悔いより懐かしさが先に来るので、過ぎたことを味わえます。',
+ '安らぎこれから':'穏やかなまま先を見ます。未来が不安ではなく楽しみとして来る、めずらしい組み合わせです。',
+ '安らぎ自分':'静かな水面に自分を映すように、自分を責めずに眺められます。自己理解が最も進みやすい型です。',
+ '安らぎまわり':'満ちた心のまま外を見るので、世界が面白いものとして目に入ります。危ない兆しには気づきにくい。',
+ '安らぎ目の前':'どこへも流れず、目の前のものに入り込みます。「いまを生きている」に最も近い状態です。',
+ '期待過去':'過去を「次に使えるもの」として思い出します。経験が資産として積み上がっていきます。',
+ '期待これから':'つねに次を探しています。動き出しが速い一方、何も起きない時間に耐えられません。',
+ '期待自分':'「自分はどこまでいけるか」を点検しています。成長そのものへの関心が高い型です。',
+ '期待まわり':'外に面白いものを探しに出ます。情報にも機会にも敏感で、行動範囲が広がります。',
+ '期待目の前':'動きたいのに、目の前のものに没頭して止まります。集中力の高さが武器になります。',
+ '気がかり過去':'済んだことを何度も点検します。後悔になりやすい反面、同じ失敗を繰り返しません。',
+ '気がかりこれから':'起きうる問題を先に引き受けます。備えは誰よりも厚く、そのぶん「いま」が薄くなります。',
+ '気がかり自分':'自分の状態をつねに点検します。不調に早く気づけますが、考えすぎて動けなくなることも。',
+ '気がかりまわり':'外の変化や危険を察知します。場の空気を読む力が高く、周囲から頼られやすい型です。',
+ '気がかり目の前':'張りつめたまま、目の前のものに入り込みます。没頭が休息の代わりになっている可能性があります。',
+ '渇き過去':'「昔のほうが良かった」という形で過去を見ます。喪失の感覚が中心にあります。',
+ '渇きこれから':'「いつか満たされるかもしれない」という形で先を見ます。求め続ける力が強い型です。',
+ '渇き自分':'「何が足りないのか」を探し続けます。答えの出にくい問いを抱え続けます。',
+ '渇きまわり':'外に埋めるものを探します。刺激はよく入りますが、手元に残りにくい。',
+ '渇き目の前':'何も浮かばないまま、そこにいます。最も自覚しにくく、本人も気づいていないことが多い型です。'
 };
 function buildType(){
   const t=TILT_TYPE[S.tiltMain];
+  /* 戻る力は型名に混ぜない。連続量なので、切ると受け直すたびに型が変わる。
+     ただし実用上いちばん効く情報なので、型名のすぐ隣に必ず併記する。 */
   const name=S.baseName+'・'+t;
   document.getElementById('typename').textContent=name;
+  const dW = S.depth>=66?'強いほう' : S.depth<34?'弱いほう' : 'どちらでもない';
+  document.getElementById('typedepth').innerHTML=
+    '揺れたあと元に戻る力は <b>'+S.depth+'％（'+dW+'）</b><br>'+
+    '<span style="font-size:12.5px">同じ型でも、ここが強い人と弱い人では選び方が正反対になります。'+
+    '型名に入れていないのは、これが連続した量で、切ると受け直すたびに型が変わってしまうためです。</span>';
   document.getElementById('typedesc').textContent=TYPE_DESC[S.baseName+t]||'';
   document.getElementById('typenote').textContent=
     '20ある型のひとつです。ふだんの心（4つ）と、考えが向かう先（5つ）の組み合わせで決まります。'+
-    'ただし同じ型の人でも、このあとに出る「戻る力」「場面で変わる度合い」「満足が生まれる場所」で中身は大きく変わります。'+
+    'ただし同じ型の人でも、このあとに出る「戻る力」「1つか、いくつもあるか」「元気が戻るのは、どんなとき」で中身は大きく変わります。'+
     '型は入口で、細部はそのあとに書いてあります。';
   S.type=name;
 }
@@ -1204,11 +1409,11 @@ function buildStandout(){
    文章 ── 結果を散文にする。結果ページの主役
    ============================================================ */
 const P_BASE={
- '安らぎ':'あなたの平常は、静かに満ちたところにあります。何もない時間そのものが心地よく、刺激がなくても心が減りません。だからこそ、危険の兆候に気づくのは少し遅れます。',
- '期待' :'あなたの平常は、少し前のめりなところにあります。何もない時間は空白ではなく、これから何かが始まる余白として現れます。そのぶん、何も起きない時間をそのまま味わうのは苦手かもしれません。',
- '緊張' :'あなたの平常は、わずかに張りつめたところにあります。何もない時間ほど落ち着かず、順調なときほど身構えます。これは弱さではなく、世界の危険や不備がよく見えているということです。',
- '空虚' :'あなたの平常は、少し薄いところにあります。順調なときでさえ、どこか物足りなさが残ります。静かなので自分でも見落としやすく、「冷めている」と自己評価しがちですが、平常の位置の問題です。',
- '中庸' :'あなたの平常は、どこにも強く寄っていません。凪いだ状態が続き、外の出来事に不必要に振り回されません。一方で、内側から湧き上がる強い動機も生まれにくくなります。'};
+ '安らぎ':'あなたの心が落ち着く場所は、静かに満ちたところです。何もない時間そのものが心地よく、刺激がなくても心が減りません。だからこそ、危険の兆候に気づくのは少し遅れます。',
+ '期待' :'あなたの心が落ち着く場所は、少し前のめりなところです。何もない時間は、これから何かが始まる前の時間として現れます。そのぶん、何も起きない時間をそのまま味わうのは苦手かもしれません。',
+ '気がかり' :'あなたの心が落ち着く場所は、わずかに張りつめたところです。何もない時間ほど落ち着かず、順調なときほど身構えます。これは弱さではなく、世界の危険や不備がよく見えているということです。',
+ '渇き' :'あなたの心が落ち着く場所は、少し薄いところです。順調なときでさえ、どこか物足りなさが残ります。静かなので自分でも見落としやすく、「冷めている」と自己評価しがちですが、心の落ち着く場所が、そこにあるというだけです。',
+ '中庸' :'あなたの心が落ち着く場所は、どこにも強く寄っていません。凪いだ状態が続き、外の出来事に不必要に振り回されません。一方で、内側から湧き上がる強い動機も生まれにくくなります。'};
 
 function buildProse(){
   const b=P_BASE[S.baseName]||P_BASE['中庸'];
@@ -1238,8 +1443,8 @@ function buildHits(){
   const L=[
    ['base', {'安らぎ':'何もしていない時間が、そのまま心地よい',
              '期待':'予定のない日でも、結局なにか始めたくなる',
-             '緊張':'順調なときほど、かえって落ち着かない',
-             '空虚':'満たされているはずなのに、どこか物足りない',
+             '気がかり' :'順調なときほど、かえって落ち着かない',
+             '渇き' :'満たされているはずなのに、どこか物足りない',
              '中庸':'強く落ち込むことも、強く高揚することも少ない'}[S.baseName]],
    ['depth', S.depth>=66?'大きく落ち込んでも、気づけばいつもの自分に戻っている'
             :S.depth<34 ?'一緒にいる人や環境で、自分がかなり変わる'
@@ -1284,28 +1489,28 @@ let fb={};
 function buildPreds(){
   const P=[];
 
-  P.push({id:'time', lbl:'時 間 感 覚 の 重 心',
-    t: S.tiltMain==='past'  ? 'あなたは時間の重心が過去にあります。今この瞬間を味わうより、済んだ出来事を意味づけ直すことに心が使われがちです。「今を生きる」という言葉に、どこか届かなさを感じるのではないでしょうか。'
-     : S.tiltMain==='future'? 'あなたは時間の重心が未来にあります。今この瞬間は、次の何かの準備として現れやすい。備えは万全ですが、その代償として「今ここ」が薄くなりがちです。'
+  P.push({id:'time', lbl:'心 が 向 い て い る 時 間',
+    t: S.tiltMain==='past'  ? 'あなたの心は、過去のほうを向いています。今この瞬間を味わうより、済んだ出来事を意味づけ直すことに心が使われがちです。「今を生きる」という言葉に、どこか届かなさを感じるのではないでしょうか。'
+     : S.tiltMain==='future'? 'あなたの心は、これからのほうを向いています。今この瞬間は、次の何かの準備として現れやすい。備えは万全ですが、その代償として「今ここ」が薄くなりがちです。'
      : S.tiltMain==='inner' ? 'あなたの時間は外側の出来事より内側の変化で刻まれます。何も起きていない期間でも、内側では時間が進んでいる感覚があるはずです。'
-     : S.tiltMain==='stay' ? 'あなたは時間の重心が「今」にあります。過去にも未来にも引っ張られにくく、目の前のことに入り込める。ただし、それが本当に今を生きているのか、考えたくないことから目の前のものへ逃げているのかは、この結果だけでは区別できません。心当たりがあるとすれば、どちらでしょうか。'
+     : S.tiltMain==='stay' ? 'あなたの心は、いまのほうを向いています。過去にも未来にも引っ張られにくく、目の前のことに入り込める。ただし、それが本当に今を生きているのか、考えたくないことから目の前のものへ逃げているのかは、この結果だけでは区別できません。心当たりがあるとすれば、どちらでしょうか。'
      : 'あなたの時間は外の出来事によって刻まれます。何も起きない期間は、時間が飛んだように感じられるのではないでしょうか。'});
 
-  P.push({id:'risk', lbl:'リ ス ク へ の 構 え',
-    t: S.depth>=60 ? 'あなたはリスクを取れる側です。ただしそれは勇気ではなく、「失敗しても必ず元の自分に戻れる」と経験から知っているからです。回復可能性の確信が、そのまま挑戦の許容量になっています。'
-     : S.depth<40 ? 'あなたは安定を選びやすい側です。ただしそれは臆病さではなく、戻る場所の確信が薄いためです。大きく揺れたとき元に戻れる保証がないので、揺らさない選択が合理的になっています。逆に言えば、戻れる場所を一つ作れば許容量は上がります。'
+  P.push({id:'risk', lbl:'思 い き っ た 選 択 が で き る か',
+    t: S.depth>=60 ? 'あなたはリスクを取れる側です。ただしそれは勇気ではなく、「失敗しても必ず元の自分に戻れる」と経験から知っているからです。「戻れる」という確信の大きさが、そのまま踏み込める幅になっています。'
+     : S.depth<40 ? 'あなたは安定を選びやすい側です。ただしそれは臆病さではなく、戻る場所の確信が薄いためです。大きく揺れたとき元に戻れる保証がないので、揺らさない選択のほうが理にかなっています。逆に言えば、戻れる場所を一つ作れば、踏み込める幅は広がります。'
      : 'リスクへの構えは状況次第で変わります。戻れる感覚がある領域では踏み込め、ない領域では固まる。その線引きが自分でも見えにくいはずです。'});
 
-  P.push({id:'meaning', lbl:'意 味 と 一 貫 性',
-    t: S.peak>=60 ? 'あなたは人生を一本の物語に統合しにくいはずです。落ち着き先が複数あるため、どれを主人公にしても他が嘘になる。「自分が何をしたいのか分からない」という悩みの正体は、意志の弱さではなくこの地形です。'
-     : S.peak<40 ? 'あなたは人生を一本の筋として捉えやすいはずです。一貫性が強みになる一方、その筋から外れる出来事や、筋に合わない自分の一面を、認めるのに時間がかかるのではないでしょうか。'
+  P.push({id:'meaning', lbl:'自 分 の 人 生 を 一 本 の 話 に で き る か',
+    t: S.peak>=60 ? 'あなたは人生を一本の物語に統合しにくいはずです。落ち着き先が複数あるため、どれを主人公にしても他が嘘になる。「自分が何をしたいのか分からない」という悩みの正体は、意志の弱さではなく、心の形です。'
+     : S.peak<40 ? 'あなたは人生を一本の筋として捉えやすいはずです。筋が通っていることが強みになる一方、その筋から外れる出来事や、筋に合わない自分の一面を、認めるのに時間がかかるのではないでしょうか。'
      : '場面によって自分が変わることを自覚しつつ、根では繋がっている感覚がある。統合はできるが、たまに揺らぐ状態です。'});
 
-  P.push({id:'growth', lbl:'学 び や す さ ・ 学 び に く さ',
-    t: (S.depth>=60?'窪みが深いあなたは、知識は入っても自分の形は変わりにくい。学びが「知っていること」で止まりやすく、体験によって作り変えられる経験を意識的に取りにいく必要があります。'
-        :'窪みが浅いあなたは、出会うものによって自分が更新されていく。学びが速い一方、何を残すか意識しないと、通り過ぎたものが積み上がらないまま流れていきます。')
-      + (S.dir>=60?'また意味が外との接触で生まれるため、学んだことは誰かに渡すか使ってみるまで自分のものになりません。'
-        :'また意味が内側で生まれるため、学んだことは一人で消化する時間を確保しないと定着しません。')});
+  P.push({id:'growth', lbl:'学 ん だ こ と の 身 に つ き 方',
+    t: (S.depth>=60?'戻る力が強いあなたは、知識は入っても自分の形のほうは変わりにくい。学びが「知っていること」で止まりやすく、体験によって作り変えられる経験を意識的に取りにいく必要があります。'
+        :'戻る力が弱いあなたは、出会うものによって自分が書き換わっていきます。学びが速い一方、何を残すか意識しないと、通り過ぎたものが積み上がらないまま流れていきます。')
+      + (S.dir>=60?'また、満足が人との関わりで生まれるため、学んだことは誰かに話すか使ってみるまで自分のものになりません。'
+        :'また、満足が一人の時間で生まれるため、学んだことはひとりで飲み込む時間がないと定着しません。')});
 
   const box=document.getElementById('preds'); box.innerHTML='';
   P.forEach(p=>{
@@ -1338,9 +1543,11 @@ function buildOverall(){
    端末で手でコピーできる長さに収めることを優先する。 */
 function payload(){
   return JSON.stringify({
-    v:"L0-v2.3",
+    v:"L0-v2.5",
+    rid:RID, pid:PID, dev:DEV,
     at:new Date().toISOString().slice(0,16),
     sec:Math.round((Date.now()-t0)/1000),
+    rs:resumed, ses:sessions,
     ans:ans.join(','),
     sc:{b:S.baseName, val:S.valence, aro:S.arousal, cl:S.clarity, mq:S.maxQ,
         dep:S.depth, pk:S.peak, dir:S.dir, tm:S.tiltMain, tilt:S.tilt, T:S.T,
@@ -1354,29 +1561,59 @@ function payload(){
     txt:document.getElementById('freetext').value
   });
 }
-/* 結果をGoogleフォームへ送る。
-   フォームは別ドメインなので、見えない iframe を宛先にして普通のフォーム送信を行う。
-   （この方式なら追加のライブラリも、サーバーも要らない） */
+/* ============================================================
+   結果を送る ── Apps Script の受け口へ
+
+   送信は結果の後処理であって、診断の本体ではない。
+   通信に失敗しても結果は必ず見られること。3段構えにしてある。
+
+     1. fetch でPOST
+     2. 見えない iframe へのフォーム送信（CORSを回避できる）
+     3. どちらも駄目なら「コピーして送ってください」の欄を使ってもらう
+
+   自動では送らない。本人がボタンを押したときだけ送る。
+   ============================================================ */
 let sent=false;
+/* ── 送信の同意 ────────────────────────────────────
+   回答は端末の中だけで計算され、送信ボタンを押すまで外に出ない。
+   だから同意を取る場所は、診断のはじめではなく「送るとき」。
+   信条に関わる項目は、法律上あつかいが重くなる場合があるため、
+   チェックを入れるまで送信ボタンを押せないようにしてある。 */
+function updSend(){
+  const c=document.getElementById('agree'), b=document.getElementById('sendbtn');
+  if(c&&b){ if(c.checked) b.removeAttribute('disabled'); else b.setAttribute('disabled','disabled'); }
+}
+
 function sendResult(){
   if(sent) return;
-  if(!FORM_ID || !ENTRY_ID){
-    document.getElementById('sendmsg').textContent='送り先がまだ設定されていません。';
-    return;
-  }
   const btn=document.getElementById('sendbtn'), msg=document.getElementById('sendmsg');
+  if(!ENDPOINT){ msg.textContent='送り先がまだ設定されていません。'; return; }
   btn.disabled=true; btn.style.opacity='.5'; msg.textContent='送っています…';
-  const f=document.createElement('form');
-  f.action='https://docs.google.com/forms/d/e/'+FORM_ID+'/formResponse';
-  f.method='POST'; f.target='gf_sink';
-  const i=document.createElement('input');
-  i.type='hidden'; i.name=ENTRY_ID; i.value=payload();
-  f.appendChild(i); document.body.appendChild(f);
-  try{ f.submit(); }catch(e){}
-  setTimeout(()=>{ f.remove();
-    sent=true; btn.textContent='送信しました';
-    msg.textContent='ありがとうございました。結果はこのまま見られますし、PDFにも残せます。';
-  },900);
+
+  const body=payload();
+  const done=()=>{ sent=true; btn.textContent='送信しました';
+    msg.textContent='ありがとうございました。結果はこのまま見られますし、PDFにも残せます。'; };
+  const fallbackIframe=()=>{
+    /* Content-Type を付けないフォーム送信なので、事前確認（プリフライト）が起きない */
+    const f=document.createElement('form');
+    f.action=ENDPOINT; f.method='POST'; f.target='gf_sink';
+    const i=document.createElement('input');
+    i.type='hidden'; i.name='payload'; i.value=body;
+    f.appendChild(i); document.body.appendChild(f);
+    try{ f.submit(); setTimeout(()=>{ f.remove(); done(); },1200); }
+    catch(e){
+      btn.disabled=false; btn.style.opacity='1';
+      msg.textContent='うまく送れませんでした。下の枠の文字列をコピーして送ってください。';
+    }
+  };
+  /* Content-Type を指定しない＝text/plain 扱いになり、事前確認なしで通る */
+  if(window.fetch){
+    fetch(ENDPOINT,{method:'POST',body:body})
+      .then(r=>r.ok?done():fallbackIframe())
+      .catch(fallbackIframe);
+  } else {
+    fallbackIframe();
+  }
 }
 
 function refreshExport(){
@@ -1386,7 +1623,7 @@ function refreshExport(){
 }
 function savePDF(){
   const st=document.getElementById('printstamp');
-  if(st) st.textContent='感覚診断（心の形）　'+new Date().toLocaleString('ja-JP')+'　プロトタイプ v2.3';
+  if(st) st.textContent='感覚診断（心の形）　'+new Date().toLocaleString('ja-JP')+'　プロトタイプ v2.5';
   refreshExport();
   setTimeout(()=>window.print(),120);
 }
@@ -1440,6 +1677,9 @@ function downloadJSON(){
     document.getElementById('copymsg').textContent='この端末ではファイル保存ができませんでした。上の枠の中身をコピーしてください。';
   }
 }
+
+/* 前回の続きがあれば、はじめる前に案内する */
+try{ showResume(); }catch(e){}
 </script>
 </body>
 </html>
